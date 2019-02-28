@@ -1,0 +1,21 @@
+{
+  "name": "Group_Portfolio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Doiverson/Group_Portfolio.git",
+  "author": "Shosuke Doi <doiverson.canada@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "browser-sync": "^2.26.3",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1",
+    "sass": "^1.17.2"
+  }
+}
