@@ -87,10 +87,28 @@ html {
 header {
   width: 100%;
   height: 80px;
-  background-color: #96DADB;
 }
 
-header .header__logo {
+header .header__flex {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .header__flex .header__logo {
   width: 10%;
-  margin: 0 auto 0 5%;
+  margin-left: 5%;
+}
+
+header .header__flex .header-info {
+  width: 60%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 5%;
+}
+
+header .header__flex .header-info p {
+  padding-right: 5%;
 }
