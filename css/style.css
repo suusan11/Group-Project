@@ -309,6 +309,7 @@ footer .footer__flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   height: 100%;
 }
 
@@ -321,7 +322,7 @@ footer .footer__flex--left {
 
 footer .footer__flex--left p {
   display: inline-block;
-  padding-right: 3%;
+  margin-right: 3%;
 }
 
 footer .footer__flex--left a {

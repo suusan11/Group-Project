@@ -10,6 +10,7 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     height: 100%;
 
     &--left {
@@ -20,7 +21,7 @@ footer {
 
       p {
         display: inline-block;
-        padding-right: 3%;
+        margin-right: 3%;
       }
 
       a {
