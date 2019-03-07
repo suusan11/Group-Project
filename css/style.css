@@ -313,7 +313,7 @@ footer .footer__flex {
 }
 
 footer .footer__flex--left {
-  width: 60%;
+  width: 80%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
