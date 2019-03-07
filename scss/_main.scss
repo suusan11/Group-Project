@@ -1,7 +1,7 @@
-@import "variable", "typography";
+@import "variable", "typography", "mixin";
 
 .main {
-  min-height: 580px;
+  min-height: 560px;
 
   &__container {
     position: relative;
@@ -18,8 +18,8 @@
     .catchcopy-box {
       position: absolute;
       top: -50px;
-      left: 15%;
-      width: 70%;
+      left: 10%;
+      width: 80%;
       height: 100px;
       background-color: #57BDD1;
       text-align: center;
@@ -33,7 +33,7 @@
 
     .form {
       width: 100%;
-      padding: 12%;
+      padding: 12% 5%;
 
       input, select {
         border: 1px solid #E5E3E3;
@@ -48,15 +48,16 @@
 
       .input__city {
         display: inline-block;
+        width: 35%;
         color: $white;
       }
 
       &__bottom {
-        margin-top: 2%;
+        margin-top: 5%;
 
         & > input[type="date"],
         & > select {
-          margin-top: 19px;
+          margin-top: 21px;
         }
 
         select {
@@ -66,14 +67,43 @@
 
       input[type="submit"] {
         display: block;
-        width: 15%;
-        padding: 1% 0;
+        width: 180px;
+        padding: 0.8% 0;
         background-color: #D91F4B;
         font-size: $font-size-h2;
         color: $white;
         border: none;
         border-radius: 30px;
         margin: 2% 0 0 auto;
+      }
+    }
+  }
+}
+
+@include tabletSize {
+  .main {
+    &__container {
+      .catchcopy-box {
+        width: 100%;
+        left: 0;
+
+        h1 {
+          font-size: $font-size-base + 10px;
+        }
+      }
+
+      .form {
+        &__top {
+          margin-top: 5%;
+        }
+
+        &__bottom {
+          margin-top: 5%;
+        }
+
+        input[type="submit"] {
+          margin-top: 5%;
+        }
       }
     }
   }
