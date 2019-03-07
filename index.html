@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <title>Movers</title>
+</head>
+<body>
+<header>
+    <div class="header__flex">
+        <div class="header__logo">
+            <img src="" alt="">
+        </div>
+        <div class="header-info">
+            <p>XXXXXX@gmail.com</p>
+            <p>1-111-1111</p>
+        </div>
+    </div>
+</header>
+
+<section class="main">
+    <div class="main__container">
+        <div class="overlay">
+            <div class="catchcopy-box">
+                <h1>Compare the best moving companies with one click</h1>
+            </div>
+            <form class="form" name="customerInfo" action="https://httpbin.org/post" method="post" accept-charset="UTF-8">
+                <div class="form__top">
+                    <input class="input-top" type="text" name="fName" placeholder="Full Name">
+                    <input class="input-top" type="email" name="email" placeholder="Email address">
+                    <input class="input-top" type="number" name="phone" placeholder="Phone number">
+                </div>
+                <div class="form__bottom">
+                    <div class="input__city">
+                        <div class="city__label">
+                            From City
+                        </div>
+                        <input class="input-date" type="text" name="from" placeholder="City, Province">
+                    </div>
+                    <div class="input__city">
+                        <div class="city__label">
+                            To City
+                        </div>
+                        <input class="input-date" type="text" name="to" placeholder="City, Province">
+                    </div>
+
+                    <input class="input-bottom" type="date" name="date" placeholder="Date">
+
+                    <ul class="select">
+                        <li class="dropup dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">--Bedroom Number--</a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Partial move<input type="text"/></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Studio apartment</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">1 bedroom apartment</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">2 bedroom apartment</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">2 bedroom apartment</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">3 bedroom apartment</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">3 bedroom house</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">4 bedroom house</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">5+ bedroom house</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--<select class="input-bottom">-->
+                        <!--<option value="">&#45;&#45;Bedroom Number&#45;&#45;</option>-->
+                        <!--<option value="">Partial move</option>-->
+                        <!--<option value="">Studio apartment</option>-->
+                        <!--<option value="">1 bedroom apartment</option>-->
+                        <!--<option value="">2 bedroom apartment</option>-->
+                        <!--<option value="">2 bedroom house</option>-->
+                        <!--<option value="">3 bedroom apartment</option>-->
+                        <!--<option value="">3 bedroom house</option>-->
+                        <!--<option value="">4 bedroom house</option>-->
+                        <!--<option value="">5+ bedroom house</option>-->
+                    <!--</select>-->
+                </div>
+                <input id="submitButton" type="submit" name="submitButton" value="Get a Quote">
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer__flex">
+        <div class="footer__flex--left">
+            <p><a href="">Log in</a></p>
+            <p><a href="">Privacy Policy</a></p>
+        </div>
+        <div class="footer__flex--right">
+            <p>&copy; 2019 MyMovingCost</p>
+        </div>
+    </div>
+</footer>
+
+<script type="text/javascript">
+
+// ***入力フォームのチェックとJSONデータの送信 ***
+    function formCheck() {
+        if ($('input[name="fName"]').val() === "" || $('input[name="lName"]').val() === "" || $('input[name="email"]').val() === "" || $('input[name="phone"]').val() === "" || $('input[name="fromCity"]').val() === "" || $('input[name="toCity"]').val() === "" || $('input[name="date"]').val() === "") {
+            alert("empty");
+                return false;
+                } else {
+                    $(function(){
+                    console.log('submit data');
+                    var data = $('form').serializeArray();
+                    console.log(data);
+                    data = parseJson(data);
+                    $.ajax({
+                    type:          'post',
+                    dataType:      'json',
+                    contentType:   'application/json',
+                    scriptCharset: 'utf-8',
+                    data:          JSON.stringify(data)
+                    })
+            });
+        return true;
+        }
+    }
+// ***JSONの記述形式を変更するオプション***
+// var parseJson = function(data) {
+//     var returnJson = {};
+//     for (idx = 0; idx < data.length; idx++) {
+//         returnJson[data[idx].name] = data[idx].value
+//     }
+//     return returnJson;
+// }
+
+$(document).ready(function(){
+    $('.dropdown-menu input').click(function (e) {
+        e.stopPropagation();
+    });
+
+    $('.dropdown a').click(function(){
+        $('.dropdown').addClass("is_open");
+    });
+    $('.dropdown-menu li').click(function(){
+
+        $('.dropdown').removeClass("is_open").appendTo($('.dropdown-toggle').text($(this).text()));
+    });
+});
+
+</script>
+</body>
+</html>

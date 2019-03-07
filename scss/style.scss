@@ -1,3 +1,14 @@
-h1 {
-  font-size: 5rem;
-}
+//common
+@import "variable";
+@import "global";
+@import "typography";
+@import "mixin";
+
+//header
+@import "header";
+
+//section
+@import "main";
+
+//footer
+@import "footer";

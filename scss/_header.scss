@@ -1,0 +1,29 @@
+header {
+  width: 100%;
+  height: 80px;
+
+  .header__flex {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header__logo {
+      width: 10%;
+      margin-left: 5%;
+    }
+
+    .header-info {
+      width: 90%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: right;
+
+      p {
+        font-weight: lighter;
+        margin-right: 5%;
+      }
+    }
+  }
+}
