@@ -14,14 +14,14 @@ header {
     }
 
     .header-info {
-      width: 60%;
+      width: 90%;
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      margin-right: 5%;
+      text-align: right;
 
       p {
-        padding-right: 5%;
+        margin-right: 5%;
       }
     }
   }
