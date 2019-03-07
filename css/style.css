@@ -137,15 +137,15 @@ html {
 .main__container .overlay {
   width: 100%;
   height: 100%;
-  background: rgba(99, 201, 229, 0.3);
+  background: rgba(99, 201, 229, 0.5);
   z-index: 10;
 }
 
 .main__container .catchcopy-box {
   position: absolute;
   top: -50px;
-  left: 10%;
-  width: 80%;
+  left: 20%;
+  width: 60%;
   height: 100px;
   background-color: #57BDD1;
   text-align: center;
@@ -159,7 +159,7 @@ html {
 
 .main__container .form {
   width: 100%;
-  padding: 12% 5%;
+  padding: 12% 10%;
 }
 
 .main__container .form input, .main__container .form select {
@@ -320,7 +320,6 @@ footer .footer__flex--left {
 }
 
 footer .footer__flex--left p {
-  width: 30%;
   padding-right: 5%;
 }
 
