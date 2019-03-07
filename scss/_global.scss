@@ -25,16 +25,7 @@ main {
 }
 
 section {
-  margin: 5% 0;
-
-  @include pcSize {
-    margin: 0;
-  }
-
-  @include tabletSize {
-    margin: 15% 0;
-    padding-top: 10%;
-  }
+  margin: 3% 0;
 }
 
 h1 {

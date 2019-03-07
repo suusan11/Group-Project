@@ -4,7 +4,76 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
     <title>Movers</title>
+
+    <style>
+        /*.select {*/
+            /*margin-left: 0;*/
+            /*margin-bottom: 20px;*/
+            /*list-style: none;*/
+        /*}*/
+
+        /*ul {*/
+            /*display: inline-block;*/
+            /*padding: 0;*/
+            /*margin: 0 0 10px 25px;*/
+        /*}*/
+
+        /*.dropup, .dropdown {*/
+            /*position: relative;*/
+        /*}*/
+
+        /*.is_open>.dropdown-menu {*/
+            /*display: block;*/
+        /*}*/
+
+        /*.nav>li>a {*/
+            /*display: block;*/
+        /*}*/
+
+        /*.dropdown-menu {*/
+            /*position: absolute;*/
+            /*top: 100%;*/
+            /*left: 0;*/
+            /*z-index: 1000;*/
+            /*display: none;*/
+            /*min-width: 160px;*/
+            /*padding: 5px 0;*/
+            /*margin: 2px 0 0;*/
+            /*list-style: none;*/
+            /*border: 1px solid #ccc;*/
+            /*-webkit-border-radius: 6px;*/
+            /*-moz-border-radius: 6px;*/
+            /*border-radius: 6px;*/
+            /*-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);*/
+            /*-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);*/
+            /*box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);*/
+            /*-webkit-background-clip: padding-box;*/
+            /*-moz-background-clip: padding;*/
+            /*background-clip: padding-box;*/
+        /*}*/
+
+        /*.dropdown-menu .divider {*/
+            /*height: 1px;*/
+            /*margin: 9px 1px;*/
+            /*overflow: hidden;*/
+            /*background-color: #e5e5e5;*/
+            /*border-bottom: 1px solid #ffffff;*/
+        /*}*/
+
+        /*.dropdown-menu>li>a {*/
+            /*display: block;*/
+            /*padding: 3px 20px;*/
+            /*clear: both;*/
+            /*font-weight: normal;*/
+            /*line-height: 20px;*/
+            /*color: #333333;*/
+            /*white-space: nowrap;*/
+        /*}*/
+    </style>
 </head>
 <body>
 <header>
@@ -20,22 +89,71 @@
 </header>
 
 <section class="main">
-    <div class="main__flex">
-        <div class="main__flex--left">
+    <div class="main__container">
+        <div class="overlay">
             <div class="catchcopy-box">
                 <h1>Compare the best moving companies with one click</h1>
             </div>
+            <form class="form" name="customerInfo" action="https://httpbin.org/post" method="post" accept-charset="UTF-8">
+                <div class="form__top">
+                    <input class="input" type="text" name="fName" placeholder="Full Name" style="width: 300px; height: 45px;">
+                    <input class="input" type="email" name="email" placeholder="Email address" style="width: 300px; height: 45px;">
+                    <input class="input" type="number" name="phone" placeholder="Phone number" style="width: 300px; height: 45px;">
+                </div>
+                <div class="form__bottom">
+                    <div class="input__city">
+                        <div class="city__label">
+                            From City
+                        </div>
+                        <input class="input" type="text" name="from" placeholder="City, Province" style="width: 300px; height: 45px;">
+                    </div>
+                    <div class="input__city">
+                        <div class="city__label">
+                            To City
+                        </div>
+                        <input class="input" type="text" name="to" placeholder="City, Province" style="width: 300px; height: 45px;">
+                    </div>
+                    <input class="input" type="date" name="date" placeholder="Date" style="width: 180px; height: 45px;">
+                    <!--<ul class="select">-->
+                        <!--<li id="js-dropdown" class="dropdown"><input type="text" class="insert-list-value" placeholder="&#45;&#45;Bedroom Number&#45;&#45;&or;" value="" onclick="showMenu();"><a href=""></a>-->
+
+                            <!--<ul id="js-dropdown-menu" class="dropdown-menu">-->
+                                <!--<li class="js-dropdown-menu-list" onclick="sendValue();" value="Others"><a href="#">Others<input type="text" id="other"/></a></li>-->
+                                <!--<li class="js-dropdown-menu-list" onclick="sendValue();" value="USA"><a href="#">USA</a></li>-->
+                                <!--<li class="js-dropdown-menu-list" onclick="sendValue();" value="UK"><a href="#">UK</a></li>-->
+                                <!--<li class="js-dropdown-menu-list" onclick="sendValue();" value="Russia"><a href="#">Russia</a></li>-->
+                            <!--</ul>-->
+
+                        <!--</li>-->
+                    <!--</ul>-->
+                    <select style="width: 280px; height: 45px;">
+                        <option value="">--Bedroom Number--</option>
+                        <option value="">Partial move</option>
+                        <option value="">Studio apartment</option>
+                        <option value="">1 bedroom apartment</option>
+                        <option value="">2 bedroom apartment</option>
+                        <option value="">2 bedroom house</option>
+                        <option value="">3 bedroom apartment</option>
+                        <option value="">3 bedroom house</option>
+                        <option value="">4 bedroom house</option>
+                        <option value="">5+ bedroom house</option>
+                    </select>
+                </div>
+                <!--<select>-->
+                    <!--<option value="">&#45;&#45;Bedroom Number&#45;&#45;</option>-->
+                    <!--<option value="">Partial move</option>-->
+                    <!--<option value="">Studio apartment</option>-->
+                    <!--<option value="">1 bedroom apartment</option>-->
+                    <!--<option value="">2 bedroom apartment</option>-->
+                    <!--<option value="">2 bedroom house</option>-->
+                    <!--<option value="">3 bedroom apartment</option>-->
+                    <!--<option value="">3 bedroom house</option>-->
+                    <!--<option value="">4 bedroom house</option>-->
+                    <!--<option value="">5+ bedroom house</option>-->
+                <!--</select>-->
+                <input id="submitButton" type="submit" name="submitButton" value="Get a Quote">
+            </form>
         </div>
-        <form class="main__flex--right" action="customer-info" method="post" accept-charset="UTF-8">
-            <input type="text" placeholder="First Name">
-            <input type="text" placeholder="Last Name">
-            <input type="text" placeholder="Email address">
-            <input type="text" placeholder="Phone number">
-            From City<input type="text" placeholder="Postal Code">
-            To City<input type="text" placeholder="Postal Code">
-            <input type="date" placeholder="Date">
-            <input type="submit" value="Get a Quote">
-        </form>
     </div>
 </section>
 
@@ -52,6 +170,51 @@
 </footer>
 
 <script type="text/javascript">
+
+// ***入力フォームのチェックとJSONデータの送信 ***
+    function formCheck() {
+        if ($('input[name="fName"]').val() === "" || $('input[name="lName"]').val() === "" || $('input[name="email"]').val() === "" || $('input[name="phone"]').val() === "" || $('input[name="fromCity"]').val() === "" || $('input[name="toCity"]').val() === "" || $('input[name="date"]').val() === "") {
+            alert("empty");
+                return false;
+                } else {
+                    $(function(){
+                    console.log('submit data');
+                    var data = $('form').serializeArray();
+                    console.log(data);
+                    data = parseJson(data);
+                    $.ajax({
+                    type:          'post',
+                    dataType:      'json',
+                    contentType:   'application/json',
+                    scriptCharset: 'utf-8',
+                    data:          JSON.stringify(data)
+                    })
+            });
+        return true;
+        }
+    }
+// ***JSONの記述形式を変更するオプション***
+// var parseJson = function(data) {
+//     var returnJson = {};
+//     for (idx = 0; idx < data.length; idx++) {
+//         returnJson[data[idx].name] = data[idx].value
+//     }
+//     return returnJson;
+// }
+
+// $(document).ready(function(){
+//     $('.js-dropdown-menu input').click(function (e) {
+//         e.stopPropagation();
+//     });
+//
+//     $('.js-dropdown a').click(function(){
+//         $('.js-dropdown').addClass("is_open");
+//     });
+//     $('.js-dropdown-menu li').click(function(){
+//
+//         $('.dropdown-toggle b').remove().appendTo($('.dropdown-toggle').text($(this).text()));
+//     });
+// });
 
 </script>
 </body>
