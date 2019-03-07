@@ -54,6 +54,8 @@
       }
 
       &__bottom {
+        margin-top: 5%;
+
         .input__city {
           display: inline-block;
           width: 35%;
@@ -65,21 +67,78 @@
           }
         }
 
-        .input-bottom {
+        .input-bottom,
+        .select {
           width: 50%;
           height: 55px;
-        }
-      }
-
-      &__bottom {
-        margin-top: 5%;
-
-        .input-bottom {
           margin-top: 21px;
         }
 
-        select {
-          border-radius: 0;
+        .select {
+          display: inline-block;
+          border: 1px solid #E5E3E3;
+          background-color: $white;
+
+          .dropdown-toggle {
+            line-height: 55px;
+            color: #757575;
+          }
+
+          .dropup, .dropdown {
+            position: relative;
+          }
+
+          .is_open > .dropdown-menu {
+            display: block;
+            background-color: $white;
+            color: $black;
+
+            & li:hover {
+              background-color: #96DADB;
+            }
+          }
+
+          & > li > a {
+            display: block;
+          }
+
+          .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            display: none;
+            min-width: 160px;
+            padding: 5px 0;
+            margin: 2px 0 0;
+            list-style: none;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            -webkit-background-clip: padding-box;
+            -moz-background-clip: padding;
+            background-clip: padding-box;
+          }
+
+          .dropdown-menu .divider {
+            height: 1px;
+            margin: 9px 1px;
+            overflow: hidden;
+            background-color: #e5e5e5;
+            border-bottom: 1px solid #ffffff;
+          }
+
+          .dropdown-menu > li > a {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: normal;
+            line-height: 20px;
+            color: #333333;
+            white-space: nowrap;
+          }
         }
       }
 
