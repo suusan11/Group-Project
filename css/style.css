@@ -172,18 +172,32 @@ html {
   justify-content: center;
 }
 
-.main__container .form .input__city {
+.main__container .form__top .input-top {
+  width: 35%;
+  height: 55px;
+}
+
+.main__container .form__bottom .input__city {
   display: inline-block;
   width: 35%;
   color: #FFFFFF;
+}
+
+.main__container .form__bottom .input__city .input-date {
+  width: 100%;
+  height: 55px;
+}
+
+.main__container .form__bottom .input-bottom {
+  width: 50%;
+  height: 55px;
 }
 
 .main__container .form__bottom {
   margin-top: 5%;
 }
 
-.main__container .form__bottom > input[type="date"],
-.main__container .form__bottom > select {
+.main__container .form__bottom .input-bottom {
   margin-top: 21px;
 }
 
@@ -219,6 +233,52 @@ html {
   }
   .main__container .form input[type="submit"] {
     margin-top: 5%;
+  }
+}
+
+@media (max-width: 699px) {
+  .main__container {
+    height: 760px;
+    background-position: center;
+  }
+  .main__container .catchcopy-box {
+    width: 100%;
+    height: 150px;
+    left: 0;
+  }
+  .main__container .catchcopy-box h1 {
+    line-height: 50px;
+    padding: 5% 0;
+  }
+  .main__container .form__top, .main__container .form__bottom {
+    display: block;
+  }
+  .main__container .form__top .input-top,
+  .main__container .form__top .input__city,
+  .main__container .form__top .input-bottom, .main__container .form__bottom .input-top,
+  .main__container .form__bottom .input__city,
+  .main__container .form__bottom .input-bottom {
+    width: 100%;
+  }
+  .main__container .form__top {
+    margin-top: 25%;
+  }
+  .main__container .form__top input {
+    margin-bottom: 5%;
+  }
+  .main__container .form__bottom {
+    margin-top: 0;
+  }
+  .main__container .form__bottom .input__city {
+    margin-bottom: 5%;
+  }
+  .main__container .form__bottom .input-bottom {
+    margin: 0 0 5%;
+  }
+  .main__container .form input[type="submit"] {
+    width: 250px;
+    margin: 5% auto 0;
+    padding: 3% 0;
   }
 }
 
