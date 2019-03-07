@@ -46,11 +46,31 @@
         justify-content: center;
       }
 
-      .input__city {
-        display: inline-block;
-        width: 35%;
-        color: $white;
+      &__top {
+        .input-top {
+          width: 35%;
+          height: 55px;
+        }
       }
+
+      &__bottom {
+        .input__city {
+          display: inline-block;
+          width: 35%;
+          color: $white;
+
+          .input-date {
+            width: 100%;
+            height: 55px;
+          }
+        }
+
+        .input-bottom {
+          width: 50%;
+          height: 55px;
+        }
+      }
+
 
       &__bottom {
         margin-top: 5%;
