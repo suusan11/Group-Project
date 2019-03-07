@@ -320,10 +320,12 @@ footer .footer__flex--left {
 }
 
 footer .footer__flex--left p {
-  padding-right: 5%;
+  display: inline-block;
+  padding-right: 3%;
 }
 
 footer .footer__flex--left a {
+  width: 100%;
   color: #545454;
 }
 

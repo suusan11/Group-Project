@@ -19,10 +19,12 @@ footer {
       align-items: center;
 
       p {
-        padding-right: 5%;
+        display: inline-block;
+        padding-right: 3%;
       }
 
       a {
+        width: 100%;
         color: $black;
       }
     }
