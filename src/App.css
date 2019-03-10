@@ -131,7 +131,7 @@ html {
   position: relative;
   width: 100%;
   height: 520px;
-  background: url("./assets/bg-sample.jpeg");
+  background: url("./assets/bg-sample.jpeg") center;
 }
 
 .main__container .overlay {
@@ -192,6 +192,10 @@ html {
   height: 55px;
 }
 
+.main__container .form__bottom .input-date {
+  height: 55px;
+  margin-top: 21px;
+}
 .main__container .form__bottom .input-bottom,
 .main__container .form__bottom .select {
   width: 50%;
@@ -205,7 +209,7 @@ html {
   background-color: #FFFFFF;
 }
 
-.main__container .form button {
+.main__container .form .sendButton {
   display: block;
   width: 180px;
   padding: 0.8% 0;
@@ -260,6 +264,9 @@ html {
   .main__container .form__bottom .input-bottom {
     width: 100%;
   }
+  .main__container .form__bottom .input-date {
+    width: 300px;
+  }
   .main__container .form__top {
     margin-top: 25%;
   }
@@ -271,6 +278,9 @@ html {
   }
   .main__container .form__bottom .input__city {
     margin-bottom: 5%;
+  }
+  .main__container .form__bottom .input-date {
+    margin: 0 0 5%;
   }
   .main__container .form__bottom .input-bottom {
     margin: 0 0 5%;

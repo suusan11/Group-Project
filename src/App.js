@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import Moon from './connection/Moon';
 import './normalize.css';
 import './App.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const moon = new Moon();
 
@@ -17,6 +19,8 @@ class App extends Component {
       moveFromId: "",
       moveToId: "",
       message: "",
+      startDate: new Date(),
+      bedRoomNumber: "",
       errors: "",
       areaList:[]
     }
@@ -24,6 +28,7 @@ class App extends Component {
 
 
     this.onChange=this.onChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.ayaka=this.ayaka.bind(this);
   }
 
@@ -35,13 +40,17 @@ class App extends Component {
 
   onChange(e){
    // console.log(e.target.value);
-  this.setState({[e.target.name]:e.target.value});
+    this.setState({[e.target.name]:e.target.value});
   };
 
   disabledInput = () => {
       var element = ReactDOM.findDOMNode(this.refs.test);
       element.setAttribute('disabled', 'true');
   };
+
+  handleChange(date) {
+    this.setState({startDate: date});
+  }
 
   componentDidMount(){
 
@@ -97,19 +106,34 @@ class App extends Component {
                               <div className="city__label">
                                   From City
                               </div>
-                                <input className="input__city-item" value={this.state.moveFromId} name="moveFromId" placeholder="City, Province" onChange={this.onChange} />
+                                {/*<input className="input__city-item" value={this.state.moveFromId} name="moveFromId" placeholder="City, Province" onChange={this.onChange} />*/}
+                                <select id="errCatch" ref="test" className="input__city-item">{this.state.areaList.map((area, index) => <option value={this.state.areaList} key={index} name="areaList" onChange={this.onChange}>{area}</option>)}</select>
                           </div>
                           <div className="input__city">
                               <div className="city__label">
                                   To City
                               </div>
-                                <input className="input__city-item" value={this.state.moveToId} name="moveToId" placeholder="City, Province" onChange={this.onChange} />
+                                {/*<input className="input__city-item" value={this.state.moveToId} name="moveToId" placeholder="City, Province" onChange={this.onChange} />*/}
+                                <select id="errCatch" ref="test" className="input__city-item d">{this.state.areaList.map((area, index) => <option value={this.state.areaList} key={index} name="areaList" onChange={this.onChange}>{area}</option>)}</select>
                           </div>
+                          {/*<input className="input-bottom" value={this.date} name="date" placeholder="Date" onChange={this.onChange} />*/}
+                          <DatePicker className="input-date" selected={this.state.startDate} onChange={this.handleChange} />
                         {/*<input value={this.state.message} name="message" placeholder="message" onChange={this.onChange} />*/}
                         {/*<input value={this.state.errors} name="errors" placeholder="errors"  onChange={this.onChange} />*/}
-                        <select id="errCatch" ref="test" className="input-bottom">{this.state.areaList.map((area, index) => <option value={this.state.areaList} key={index} name="areaList" onChange={this.onChange}>{area}</option>)}</select>
+                        <select className="input-bottom select" value={this.state.bedRoomNumber} name="bedRoomNumber" onChange={this.onChange}>
+                            <option value="">--Bedroom Number--</option>
+                            <option value="partial">Partial move</option>
+                            <option value="studio">Studio apartment</option>
+                            <option value="1bedapartment">1 bedroom apartment</option>
+                            <option value="1bedapartment">2 bedroom apartment</option>
+                            <option value="2bedhouse">2 bedroom house</option>
+                            <option value="1bedapartment">3 bedroom apartment</option>
+                            <option value="3bedhouse">3 bedroom house</option>
+                            <option value="4bedhouse">4 bedroom house</option>
+                            <option value="5morebedhouse">5+ bedroom house</option>
+                        </select>
                       </div>
-                      <button onClick={this.ayaka} type="submit" name="submitButton">Get a Quote</button>
+                      <button className="sendButton" onClick={this.ayaka} type="submit" name="submitButton">Get a Quote</button>
                     </form>
                   </div>
               </div>
