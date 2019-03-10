@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import Moon from './connection/Moon';
 import './normalize.css';
 import './App.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const moon = new Moon();
 
@@ -17,6 +19,7 @@ class App extends Component {
       moveFromId: "",
       moveToId: "",
       message: "",
+      startDate: new Date(),
       errors: "",
       areaList:[]
     }
@@ -24,6 +27,7 @@ class App extends Component {
 
 
     this.onChange=this.onChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.ayaka=this.ayaka.bind(this);
   }
 
@@ -42,6 +46,10 @@ class App extends Component {
       var element = ReactDOM.findDOMNode(this.refs.test);
       element.setAttribute('disabled', 'true');
   };
+
+  handleChange(date) {
+    this.setState({startDate: date});
+  }
 
   componentDidMount(){
 
@@ -105,11 +113,13 @@ class App extends Component {
                               </div>
                                 <input className="input__city-item" value={this.state.moveToId} name="moveToId" placeholder="City, Province" onChange={this.onChange} />
                           </div>
+                          {/*<input className="input-bottom" value={this.date} name="date" placeholder="Date" onChange={this.onChange} />*/}
+                          <DatePicker className="input-date" selected={this.state.startDate} onChange={this.handleChange} />
                         {/*<input value={this.state.message} name="message" placeholder="message" onChange={this.onChange} />*/}
                         {/*<input value={this.state.errors} name="errors" placeholder="errors"  onChange={this.onChange} />*/}
-                        <select id="errCatch" ref="test" className="input-bottom">{this.state.areaList.map((area, index) => <option value={this.state.areaList} key={index} name="areaList" onChange={this.onChange}>{area}</option>)}</select>
+                        <select id="errCatch" ref="test" className="input-bottom select">{this.state.areaList.map((area, index) => <option value={this.state.areaList} key={index} name="areaList" onChange={this.onChange}>{area}</option>)}</select>
                       </div>
-                      <button onClick={this.ayaka} type="submit" name="submitButton">Get a Quote</button>
+                      <button className="sendButton" onClick={this.ayaka} type="submit" name="submitButton">Get a Quote</button>
                     </form>
                   </div>
               </div>
