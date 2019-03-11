@@ -22,9 +22,10 @@ class App extends Component {
       startDate: new Date(),
       bedRoomNumber: "",
       errors: "",
-      areaList:[]
+      areaList:[],
+      provList:[]
     }
-  
+
 
 
     this.onChange=this.onChange.bind(this);
@@ -38,7 +39,7 @@ class App extends Component {
     //  submitボタンを押した時に動く関数
    };
 
-  onChange(e){
+    onChange(e){
    // console.log(e.target.value);
     this.setState({[e.target.name]:e.target.value});
   };
@@ -63,9 +64,10 @@ class App extends Component {
             // console.log(JSON.stringify(data));
             for(let i = 0; i < res.data.length; i++) {
                 // console.log(res.data[i].name);
-                this.setState({ areaList: this.state.areaList.concat([res.data[i].name]) });
+                this.setState({ areaList: this.state.areaList.concat([res.data[i].city] + ', ' + [res.data[i].admin]) });
                 // this.setState({ areaList:[res.data[i].name] });
             }
+
             console.log(this.state.areaList);
         })
         .catch(err => {
@@ -73,6 +75,8 @@ class App extends Component {
             console.log(JSON.stringify(err))
     })
   }
+
+
 
   render() {
     return (
@@ -142,8 +146,8 @@ class App extends Component {
           <footer>
               <div className="footer__flex">
                   <div className="footer__flex--left">
-                      <p><a href="">Log in</a></p>
-                      <p><a href="">Privacy Policy</a></p>
+                      <p><a href="/">Log in</a></p>
+                      <p><a href="/">Privacy Policy</a></p>
                   </div>
                   <div className="footer__flex--right">
                       <p>&copy; 2019 MyMovingCost</p>
