@@ -10,7 +10,7 @@ if(process.env.NODE_ENV === 'production'){
 
 }else{
 
-    API_URI = 'http://localhost:5050';
+    API_URI = 'https://shrouded-gorge-90372.herokuapp.com';
     console.log("Got a Dev URI");
 
 }
