@@ -23,7 +23,6 @@ class App extends Component {
       bedRoomNumber: "",
       errors: "",
       areaList:[],
-      provList:[]
     }
 
 
