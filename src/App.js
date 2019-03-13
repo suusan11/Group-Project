@@ -16,10 +16,10 @@ class App extends Component {
       fullName : "",
       phoneNumber: "",
       email: "",
-      moveFromId: "",
-      moveToId: "",
+      moveFromID: "",
+      moveToID: "",
       message: "",
-      startDate: new Date(),
+      moveDate: new Date(),
       bedRoomNumber: "",
       errors: "",
       areaList:[],
@@ -31,12 +31,55 @@ class App extends Component {
     this.onChange=this.onChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.ayaka=this.ayaka.bind(this);
+    this.isEmpty = this.isEmpty.bind(this);
   }
 
 
-  ayaka(){
+  ayaka(e){
      console.log("ayaka is functioning");
     //  submitボタンを押した時に動く関数
+
+      e.preventDefault();
+
+
+      //reset errors
+      this.setState({ errors: {} });
+
+      let submitData = {};
+      let moveDate = {};
+      moveDate.year = this.state.moveDate.getFullYear();
+      moveDate.month = this.state.moveDate.getMonth();
+      moveDate.day = this.state.moveDate.getDate();
+
+      submitData.fullName = this.state.fullName;
+      submitData.phoneNumber = this.state.phoneNumber;
+      submitData.email = this.state.email;
+      submitData.message = this.state.message;
+      submitData.moveDate = moveDate;
+      submitData.moveFromID = this.state.moveFromID;
+      submitData.moveToID = this.state.moveToID;
+      console.log("onSubmit");
+      console.log("onChange fullName => "+this.state.fullName)
+      console.log("onChange phoneNumber => "+this.state.phoneNumber)
+      console.log("onChange email => "+this.state.email)
+      console.log("onChange message => "+this.state.message)
+      console.log("onChange moveDate Year => "+moveDate.year )
+      console.log("onChange moveDate Month => "+moveDate.month )
+      console.log("onChange moveDate Day => "+moveDate.day )
+      console.log("onChange moveFromID => "+this.state.moveFromID)
+      console.log("onChange moveToID => "+this.state.moveToID)
+
+      moon.post('api/client/create',submitData)
+          .then((res) => {
+              console.log("Success"+JSON.stringify(res.data))
+              //redirect
+              this.props.history.push('/conclusion');
+
+          })
+          .catch((err) => {
+              console.log("Error"+JSON.stringify(err.response.data))
+              this.setState({ errors: err.response.data});
+          })
    };
 
     onChange(e){
@@ -72,10 +115,18 @@ class App extends Component {
         })
         .catch(err => {
             this.disabledInput();
-            console.log(JSON.stringify(err))
-    })
+            console.log(JSON.stringify(err));
+        })
   }
 
+
+
+    // Check if the object is empty
+    ////////////////////////////////////////
+    isEmpty(obj){
+        return !Object.keys(obj).length;
+    }
+    ////////////////////////////////////////
 
 
   render() {
@@ -99,31 +150,41 @@ class App extends Component {
                       <div className="catchcopy-box">
                           <h1>Compare the best moving companies with one click</h1>
                       </div>
-                    <form className="form" name="customerInfo" action="https://httpbin.org/post" method="post" acceptCharset="UTF-8">
+                    <form className="form" name="customerInfo">
                       <div className="form__top">
+
+                        {/*input name*/}
                         <input className="input-top" value={this.state.fullName} name="fullName" placeholder="Full name" onChange={this.onChange} />
+                        <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.fullName}</div>
+
+                        {/*input email*/}
                         <input className="input-top" value={this.state.email} name="email" placeholder="Email address" onChange={this.onChange} />
+                        <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.email}</div>
+
+                        {/*input phone number*/}
                         <input className="input-top" value={this.state.phoneNumber} name="phoneNumber" placeholder="Phone number" onChange={this.onChange} />
+                        <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.phoneNumber}</div>
                       </div>
+
                       <div className="form__bottom">
                           <div className="input__city">
-                              <div className="city__label">
-                                  From City
-                              </div>
+                              <div className="city__label">Moving from</div>
                                 {/*<input className="input__city-item" value={this.state.moveFromId} name="moveFromId" placeholder="City, Province" onChange={this.onChange} />*/}
-                                <select id="errCatch" ref="test" className="input__city-item">{this.state.areaList.map((area, index) => <option value={this.state.areaList} key={index} name="areaList" onChange={this.onChange}>{area}</option>)}</select>
+                              <select id="errCatch" ref="test" className="input__city-item">{this.state.areaList.map((area, index) => <option value={this.state.moveFromID} key={index} name="areaList">{area}</option>)}</select>
+                              <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.moveFromID}</div>
                           </div>
                           <div className="input__city">
-                              <div className="city__label">
-                                  To City
-                              </div>
+                              <div className="city__label">Moving to</div>
                                 {/*<input className="input__city-item" value={this.state.moveToId} name="moveToId" placeholder="City, Province" onChange={this.onChange} />*/}
-                                <select id="errCatch" ref="test" className="input__city-item d">{this.state.areaList.map((area, index) => <option value={this.state.areaList} key={index} name="areaList" onChange={this.onChange}>{area}</option>)}</select>
+                                <select id="errCatch" ref="test" className="input__city-item">{this.state.areaList.map((area, index) => <option value={this.state.moveToID} key={index} name="areaList">{area}</option>)}</select>
+                                <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.moveToID}</div>
                           </div>
-                          {/*<input className="input-bottom" value={this.date} name="date" placeholder="Date" onChange={this.onChange} />*/}
-                          <DatePicker className="input-date" selected={this.state.startDate} onChange={this.handleChange} />
-                        {/*<input value={this.state.message} name="message" placeholder="message" onChange={this.onChange} />*/}
-                        {/*<input value={this.state.errors} name="errors" placeholder="errors"  onChange={this.onChange} />*/}
+
+                          {/*input date*/}
+                          <DatePicker className="input-date" selected={this.state.moveDate} onChange={this.handleChange} />
+                          <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.moveDate}</div>
+
+                        {/*select bedroom number*/}
                         <select className="input-bottom select" value={this.state.bedRoomNumber} name="bedRoomNumber" onChange={this.onChange}>
                             <option value="">--Bedroom Number--</option>
                             <option value="partial">Partial move</option>
@@ -136,6 +197,7 @@ class App extends Component {
                             <option value="4bedhouse">4 bedroom house</option>
                             <option value="5morebedhouse">5+ bedroom house</option>
                         </select>
+                        <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.bedRoomNumber}</div>
                       </div>
                       <button className="sendButton" onClick={this.ayaka} type="submit" name="submitButton">Get a Quote</button>
                     </form>
