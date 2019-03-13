@@ -20,7 +20,7 @@ class App extends Component {
       moveToID: "",
       message: "",
       moveDate: new Date(),
-      bedRoomNumber: "",
+      bedRoomNumber: [],
       errors: "",
       areaList:[],
       provList:[]
@@ -117,6 +117,23 @@ class App extends Component {
             this.disabledInput();
             console.log(JSON.stringify(err));
         })
+
+      moon
+          .get('api/roomtype/all')
+          .then(res =>{
+              // console.log(JSON.stringify(data));
+              for(let i = 0; i < res.data.length; i++) {
+                  // console.log(res.data[i].name);
+                  this.setState({ bedRoomNumber: this.state.bedRoomNumber.concat([res.data[i].name]) });
+                  // this.setState({ areaList:[res.data[i].name] });
+              }
+
+              console.log(this.state.bedRoomNumber);
+          })
+          .catch(err => {
+              this.disabledInput();
+              console.log(JSON.stringify(err));
+          })
   }
 
 
@@ -196,18 +213,7 @@ class App extends Component {
                       </div>
 
                     {/*select bedroom number*/}
-                    <select className="input-bottom select" value={this.state.bedRoomNumber} name="bedRoomNumber" onChange={this.onChange}>
-                        <option value="">--Bedroom Number--</option>
-                        <option value="partial">Partial move</option>
-                        <option value="studio">Studio apartment</option>
-                        <option value="1bedapartment">1 bedroom apartment</option>
-                        <option value="1bedapartment">2 bedroom apartment</option>
-                        <option value="2bedhouse">2 bedroom house</option>
-                        <option value="1bedapartment">3 bedroom apartment</option>
-                        <option value="3bedhouse">3 bedroom house</option>
-                        <option value="4bedhouse">4 bedroom house</option>
-                        <option value="5morebedhouse">5+ bedroom house</option>
-                    </select>
+                    <select className="input-bottom select">{this.state.bedRoomNumber.map((bedRoom, index) => <option value={this.state.bedRoomNumber} key={index} name="bedRoom">{bedRoom}</option>)}</select>
                         <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.bedRoomNumber}</div>
                       </div>
                       <button className="sendButton" onClick={this.ayaka} type="submit" name="submitButton">Get a Quote</button>
