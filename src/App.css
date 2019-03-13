@@ -162,9 +162,15 @@ html {
   padding: 12% 10%;
 }
 
+.main__container .form input {
+  padding: 2%;
+}
+
 .main__container .form input, .main__container .form select {
   border: 1px solid #E5E3E3;
   outline: none;
+  width: 100%;
+  height: 100%;
 }
 
 .main__container .form__top, .main__container .form__bottom {
@@ -172,9 +178,14 @@ html {
   justify-content: center;
 }
 
-.main__container .form__top .input-top {
-  width: 35%;
+.main__container .form__top .input__container {
+  width: 100%;
   height: 55px;
+  display: block;
+}
+
+.main__container  .input__top {
+  width: 100%;
 }
 
 .main__container .form__bottom {
@@ -190,6 +201,7 @@ html {
 .main__container .form__bottom .input__city-item {
   width: 100%;
   height: 55px;
+  color: #545454;
 }
 
 .main__container .form__bottom .input-date {
@@ -342,5 +354,13 @@ footer .footer__flex--left a {
 
 footer .footer__flex--right p {
   font-weight: lighter;
+  font-size: 13px;
+}
+
+/*show error*/
+
+div.error{
+  color: red;
+  margin: 2% 0 0 2%;
   font-size: 13px;
 }

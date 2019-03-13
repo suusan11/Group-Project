@@ -154,49 +154,60 @@ class App extends Component {
                       <div className="form__top">
 
                         {/*input name*/}
-                        <input className="input-top" value={this.state.fullName} name="fullName" placeholder="Full name" onChange={this.onChange} />
-                        <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.fullName}</div>
+                        <div className="input__container">
+                            <input className="input-top" value={this.state.fullName} name="fullName" placeholder="Full name" onChange={this.onChange} />
+                            <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.fullName}</div>
+                        </div>
 
                         {/*input email*/}
-                        <input className="input-top" value={this.state.email} name="email" placeholder="Email address" onChange={this.onChange} />
-                        <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.email}</div>
+                        <div className="input__container">
+                            <input className="input-top" value={this.state.email} name="email" placeholder="Email address" onChange={this.onChange} />
+                            <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.email}</div>
+                        </div>
 
                         {/*input phone number*/}
-                        <input className="input-top" value={this.state.phoneNumber} name="phoneNumber" placeholder="Phone number" onChange={this.onChange} />
-                        <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.phoneNumber}</div>
+                        <div className="input__container">
+                            <input className="input-top" value={this.state.phoneNumber} name="phoneNumber" placeholder="Phone number" onChange={this.onChange} />
+                            <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.phoneNumber}</div>
+                        </div>
                       </div>
 
                       <div className="form__bottom">
-                          <div className="input__city">
-                              <div className="city__label">Moving from</div>
-                                {/*<input className="input__city-item" value={this.state.moveFromId} name="moveFromId" placeholder="City, Province" onChange={this.onChange} />*/}
-                              <select id="errCatch" ref="test" className="input__city-item">{this.state.areaList.map((area, index) => <option value={this.state.moveFromID} key={index} name="areaList">{area}</option>)}</select>
-                              <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.moveFromID}</div>
-                          </div>
-                          <div className="input__city">
-                              <div className="city__label">Moving to</div>
-                                {/*<input className="input__city-item" value={this.state.moveToId} name="moveToId" placeholder="City, Province" onChange={this.onChange} />*/}
-                                <select id="errCatch" ref="test" className="input__city-item">{this.state.areaList.map((area, index) => <option value={this.state.moveToID} key={index} name="areaList">{area}</option>)}</select>
-                                <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.moveToID}</div>
-                          </div>
 
-                          {/*input date*/}
+                      {/*select moving from*/}
+                      <div className="input__city">
+                          <div className="city__label">Moving from</div>
+                          <select id="errCatch" ref="test" className="input__city-item">{this.state.areaList.map((area, index) => <option value={this.state.moveFromID} key={index} name="areaList">{area}</option>)}</select>
+                          <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.moveFromID}</div>
+                      </div>
+
+                      {/*select moving to*/}
+                      <div className="input__city">
+                          <div className="city__label">Moving to</div>
+                            {/*<input className="input__city-item" value={this.state.moveToId} name="moveToId" placeholder="City, Province" onChange={this.onChange} />*/}
+                            <select id="errCatch" ref="test" className="input__city-item">{this.state.areaList.map((area, index) => <option value={this.state.moveToID} key={index} name="areaList">{area}</option>)}</select>
+                            <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.moveToID}</div>
+                      </div>
+
+                      {/*input date*/}
+                      <div className="input__container">
                           <DatePicker className="input-date" selected={this.state.moveDate} onChange={this.handleChange} />
                           <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.moveDate}</div>
+                      </div>
 
-                        {/*select bedroom number*/}
-                        <select className="input-bottom select" value={this.state.bedRoomNumber} name="bedRoomNumber" onChange={this.onChange}>
-                            <option value="">--Bedroom Number--</option>
-                            <option value="partial">Partial move</option>
-                            <option value="studio">Studio apartment</option>
-                            <option value="1bedapartment">1 bedroom apartment</option>
-                            <option value="1bedapartment">2 bedroom apartment</option>
-                            <option value="2bedhouse">2 bedroom house</option>
-                            <option value="1bedapartment">3 bedroom apartment</option>
-                            <option value="3bedhouse">3 bedroom house</option>
-                            <option value="4bedhouse">4 bedroom house</option>
-                            <option value="5morebedhouse">5+ bedroom house</option>
-                        </select>
+                    {/*select bedroom number*/}
+                    <select className="input-bottom select" value={this.state.bedRoomNumber} name="bedRoomNumber" onChange={this.onChange}>
+                        <option value="">--Bedroom Number--</option>
+                        <option value="partial">Partial move</option>
+                        <option value="studio">Studio apartment</option>
+                        <option value="1bedapartment">1 bedroom apartment</option>
+                        <option value="1bedapartment">2 bedroom apartment</option>
+                        <option value="2bedhouse">2 bedroom house</option>
+                        <option value="1bedapartment">3 bedroom apartment</option>
+                        <option value="3bedhouse">3 bedroom house</option>
+                        <option value="4bedhouse">4 bedroom house</option>
+                        <option value="5morebedhouse">5+ bedroom house</option>
+                    </select>
                         <div className="error">{this.isEmpty(this.state.errors)?'':this.state.errors.bedRoomNumber}</div>
                       </div>
                       <button className="sendButton" onClick={this.ayaka} type="submit" name="submitButton">Get a Quote</button>
