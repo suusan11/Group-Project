@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Moon from './config/connection/Moon';
+import Moon from './connection/Moon';
 import './normalize.css';
 import './App.css';
 import DatePicker from "react-datepicker";
