@@ -131,7 +131,7 @@ html {
   position: relative;
   width: 100%;
   height: 520px;
-  background: url("../bg-sample.jpeg");
+  background: url("../src/bg-sample.jpeg");
 }
 
 .main__container .overlay {
