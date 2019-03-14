@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Group_PJT_Front.iml" filepath="$PROJECT_DIR$/.idea/Group_PJT_Front.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/PJT_MovingCompany.iml" filepath="$PROJECT_DIR$/.idea/PJT_MovingCompany.iml" />
     </modules>
   </component>
