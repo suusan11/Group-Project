@@ -27,6 +27,8 @@ const moon = new Moon();
 let counter = 0;
 function createData(leadId, phone, email, origin, destination, date) {
     counter += 1;
+
+    //オブジェクトの分割代入？
     return { id: counter, leadId, phone, email, origin, destination, date };
 }//新規データ作成, 下の方にクラス'EnhancedTable'にあるオブジェクト（データ一覧）とこちらの関数が繋がっている。
 
@@ -221,12 +223,14 @@ class EnhancedTable extends React.Component {
         moon
             .get('api/client/all')
             .then(res => {
-                // console.log(JSON.stringify(data));
                 for (let i = 0; i < res.data.length; i++) {
-                    // console.log(res.data[i].name);
-                    this.setState({ data: [createData(this.state.data.concat([res.data[i].id],[res.data[i].fullName]))]});
+                    // this.setState({ data: [createData(this.state.data.concat([res.data[i].id],[res.data[i].fullName]))]});
+                    // createDataに{ id: counter, leadId, phone, email, origin, destination, date };がリターンして、state.dataに追加される
+                    this.setState({ data: this.state.data.concat([createData([res.data[i]._id],[res.data[i].phoneNumber],[res.data[i].email],[res.data[i].moveFromID],[res.data[i].moveToID],[res.data[i].moveDate.day]+ "/" +[res.data[i].moveDate.month]+ "/" +[res.data[i].moveDate.year] )])});
+                    //createDataの変数のArray[]無くても動く
+                    // this.setState({ data: this.state.data.concat([createData(res.data[i]._id,res.data[i].phoneNumber,res.data[i].email,res.data[i].moveFromID,res.data[i].moveToID,res.data[i].moveDate.day+ "/" +res.data[i].moveDate.month+ "/" +res.data[i].moveDate.year )])});
                 }
-                // console.log();
+                console.log("data[] is :"+ JSON.stringify(this.state.data));
             })
             .catch(err => {
                 console.log(JSON.stringify(err));
@@ -307,6 +311,10 @@ class EnhancedTable extends React.Component {
                             {stableSort(data, getSorting(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map(n => {
+
+                                    console.log("n"+JSON.stringify(n));
+                                    console.log("nPhone"+JSON.stringify(n.phone));
+
                                     const isSelected = this.isSelected(n.id);
                                     return (
                                         //一人分の型を作る（データは入っていない）
