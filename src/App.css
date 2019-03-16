@@ -132,7 +132,7 @@ html {
   position: relative;
   width: 100%;
   height: 520px;
-  background: url("componets/assets/bg-sample.jpeg") center;
+  background: url("components/assets/bg-sample.jpeg") center;
 }
 
 .main__container .overlay {
