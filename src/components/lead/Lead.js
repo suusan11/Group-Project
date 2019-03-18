@@ -337,6 +337,12 @@ render() {
                             <p>Receive quotes from different movers</p>
                         </div>
                     </div>
+                    <div className="info">
+                        <p className="info--item">We are here to help you to contact with the reliable moving companies and receive the best service for your upcoming move.</p>
+                        <p className="info--item">Whether you are moving locally or long distance, you will be able to compare the moving companies with one click.</p>
+                        <p className="info--item">You will receive pricing information and plan your budget appropriately.</p>
+                        <p className="info--item">You will also receive information regarding the services of the movers and may decide to go with the one according to your needs.</p>
+                    </div>
                 </section>
 
                 <footer>

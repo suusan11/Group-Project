@@ -145,8 +145,8 @@ html {
 .main__container .catchcopy-box {
   position: absolute;
   top: -50px;
-  left: 20%;
-  width: 60%;
+  left: 10%;
+  width: 80%;
   height: 100px;
   background-color: #57BDD1;
   text-align: center;
@@ -326,6 +326,15 @@ html {
 }
 .values__flex div:nth-child(3) img {
   width: 33%;
+}
+
+.info {
+  width: 80%;
+  margin: 0 auto;
+}
+.info--item::before {
+  content: url("./components/assets/check.png");
+  padding-right: 2%;
 }
 
 @media (max-width: 699px) {
