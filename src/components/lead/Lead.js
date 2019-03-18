@@ -12,7 +12,10 @@ import '../../App.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
+//icons
+import coin from "../assets/coin.png";
+import sandclock from "../assets/sandclock.png";
+import track from "../assets/track.png";
 
 const moon = new Moon();
 
@@ -31,6 +34,7 @@ class Lead extends Component {
             bedRoomNumber: [],
             errors: "",
             areaList: [],
+            items: [],
             Data:[],
         }
 
@@ -39,6 +43,7 @@ class Lead extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.ayaka = this.ayaka.bind(this);
         this.isEmpty = this.isEmpty.bind(this);
+        this.filterList = this.filterList.bind(this);
     }
 
 
@@ -131,22 +136,23 @@ class Lead extends Component {
         console.log(JSON.stringify("💩"))
 
         // http://localhost:5050/api/area/all
-        moon
-            .get('api/area/all')
-            .then(res =>{
-                // console.log(JSON.stringify(data));
-                for(let i = 0; i < res.data.length; i++) {
-                    // console.log(res.data[i].name);
-                    this.setState({ areaList: this.state.areaList.concat([res.data[i].city] + ', ' + [res.data[i].admin]) });
-                    // this.setState({ areaList:[res.data[i].name] });
-                }
-
-                console.log(this.state.areaList);
-            })
-            .catch(err => {
-                this.disabledInput();
-                console.log(JSON.stringify(err));
-            })
+        // moon
+        //     .get('api/area/all')
+        //     // .then(blob => blob.json())
+        //     .then(res =>{
+        //         // console.log(JSON.stringify(data));
+        //         for(let i = 0; i < res.data.length; i++) {
+        //             // console.log(res.data[i].name);
+        //             this.setState({ areaList: this.state.areaList.concat([res.data[i].city] + ", " + [res.data[i].city])});
+        //             // this.setState({ areaList:[res.data[i].name] });
+        //         }
+        //
+        //         // console.log(this.state.areaList);
+        //     })
+        //     .catch(err => {
+        //         this.disabledInput();
+        //         console.log(JSON.stringify(err));
+        //     })
 
 
         //get room type
@@ -168,10 +174,35 @@ class Lead extends Component {
             })
     }
 
+    componentWillMount() {
+        moon
+            .get('api/area/all')
+                // .then(blob => blob.json())
+            .then(res =>{
+                // console.log(JSON.stringify(data));
+                for(let i = 0; i < res.data.length; i++) {
+                // console.log(res.data[i].name);
+                this.setState({ areaList: this.state.areaList.concat([res.data[i].city] + ", " + [res.data[i].admin])});
+                }
+
+            })
+            .catch(err => {
+                this.disabledInput();
+                console.log(JSON.stringify(err));
+            })
+    }
 
 
+    ////////////////////////////////////////
+    filterList(e) {
+        const updateList = this.state.areaList.filter((item) => {
+            return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
 
+        })
+        this.setState({items: updateList})
 
+    }
+    ////////////////////////////////////////
 
 
 
@@ -240,21 +271,28 @@ render() {
                                     {/*select moving from*/}
                                     <div className="input__city">
                                         <div className="city__label">Moving from</div>
-                                        <select id="errCatch" ref="test"
-                                                className="input__city-item">{this.state.areaList.map((area, index) =>
-                                            <option value={this.state.moveFromID} key={index}
-                                                    name="areaList">{area}</option>)}</select>
+                                        <input id="errCatch" ref="test" className="input__city-item"　onChange={this.filterList} />
+                                            <div>
+                                                {this.state.items.map((area, index) => {
+                                                    return (
+                                                        <li value={this.state.moveFromID} key={index} name="areaList">{area}</li>
+                                                    )
+                                                })}
+                                            </div>
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveFromID}</div>
                                     </div>
 
                                     {/*select moving to*/}
                                     <div className="input__city">
                                         <div className="city__label">Moving to</div>
-                                        {/*<input className="input__city-item" value={this.state.moveToId} name="moveToId" placeholder="City, Province" onChange={this.onChange} />*/}
-                                        <select id="errCatch" ref="test"
-                                                className="input__city-item">{this.state.areaList.map((area, index) =>
-                                            <option value={this.state.moveToID} key={index}
-                                                    name="areaList">{area}</option>)}</select>
+                                        <input id="errCatch" ref="test" className="input__city-item"　onChange={this.filterList} />
+                                            <div>
+                                                {this.state.items.map((area, index) => {
+                                                    return (
+                                                        <li value={this.state.moveToID} key={index} name="areaList">{area}</li>
+                                                    )
+                                                })}
+                                            </div>
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveToID}</div>
                                     </div>
 
@@ -276,6 +314,27 @@ render() {
                                         name="submitButton">Get a Quote
                                 </button>
                             </form>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="values">
+                    <h2>Why mymovingcost.com ?</h2>
+                    <div className="values__flex">
+                        <div className="values__flex--item">
+                            <img src={sandclock} alt="sand clock"/>
+                            <h3>Save time</h3>
+                            <p>It takes only 1 minute</p>
+                        </div>
+                        <div className="values__flex--item">
+                            <img src={coin} alt="coin"/>
+                            <h3>Save money</h3>
+                            <p>Save up to %70 on your move</p>
+                        </div>
+                        <div className="values__flex--item">
+                            <img src={track} alt="tracking car"/>
+                            <h3>Compare top movers</h3>
+                            <p>Receive quotes from different movers</p>
                         </div>
                     </div>
                 </section>
