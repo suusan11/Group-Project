@@ -14,7 +14,7 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: "",
+            username: "",
             password: "",
             password2: "",
             accessID: "",
@@ -23,7 +23,8 @@ class Register extends Component {
             phoneNumber: "",
             description: "",
             errors: "",
-            message: ""
+            message: "",
+            areaList: []
         }
 
 
@@ -113,36 +114,36 @@ class Register extends Component {
                         {/*input name*/}
                         <div className="input__container--register">
                             <label>Username</label>
-                            <input value={this.state.userName} name="userName" onChange={this.onChange}/>
-                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.fullName}</div>
+                            <input value={this.state.username} name="userName" onChange={this.onChange}/>
+                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.username}</div>
                         </div>
 
                         {/*input Password*/}
                         <div className="input__container--register">
                             <label>Password</label>
                             <input value={this.state.password} name="password" onChange={this.onChange}/>
-                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.fullName}</div>
+                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.password}</div>
                         </div>
 
                         {/*input Password2*/}
                         <div className="input__container--register">
                             <label>Password2</label>
                             <input value={this.state.password2} name="password2" onChange={this.onChange}/>
-                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.fullName}</div>
+                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.password2}</div>
                         </div>
 
                         {/*input AccessID*/}
                         <div className="input__container--register">
                             <label>AccessID</label>
                             <input value={this.state.accessID} name="accessID" onChange={this.onChange}/>
-                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.fullName}</div>
+                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.accessID}</div>
                         </div>
 
                         {/*input Company name*/}
                         <div className="input__container--register">
                             <label>Company name</label>
                             <input value={this.state.companyName} name="companyName" onChange={this.onChange}/>
-                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.fullName}</div>
+                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.companyName}</div>
                         </div>
 
                         {/*input email*/}
@@ -159,11 +160,27 @@ class Register extends Component {
                             <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.phoneNumber}</div>
                         </div>
 
+                        {/*check covered area*/}
+                            <label>Covered Area</label>
+                        <div className="coveredarea">
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />Alberta
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />British Columbia
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />Manitoba
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />Nova Scotia
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />New Brunswick
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />Newfoundland and Labrador
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />Ontario
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />Prince Edward Island
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />Quebec
+                            <input type="checkbox" name="areaList" value={this.state.areaList} />Saskatchewan
+                        </div>
+
+
                         {/*input description*/}
                         <div className="input__container--register">
                             <label>Description</label>
                             <textarea value={this.state.description} name="description" onChange={this.onChange}/>
-                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.phoneNumber}</div>
+                            <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.description}</div>
                         </div>
 
                         <button className="sendButton" onClick={this.submit} type="submit" name="registerButton">
