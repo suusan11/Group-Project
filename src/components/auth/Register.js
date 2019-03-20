@@ -24,21 +24,21 @@ class Register extends Component {
             description: "",
             errors: "",
             message: "",
-            areaList: []
+            coveredArea: []
         }
 
 
         this.onChange = this.onChange.bind(this);
         this.submit = this.submit.bind(this);
         this.isEmpty = this.isEmpty.bind(this);
+        this.inputChange = this.inputChange.bind(this);
     }
-
 
 
 
     //Click event for submit(get a quote)
     submit(e) {
-        console.log("create account for moving company");
+        console.log("THIS IS A SUBMIT BUTTON");
         //  submitボタンを押した時に動く関数
 
         e.preventDefault();
@@ -47,32 +47,20 @@ class Register extends Component {
         //reset errors
         this.setState({errors: {}});
 
-        // let submitData = {};
-        // let moveDate = {};
-        // moveDate.year = this.state.moveDate.getFullYear();
-        // moveDate.month = this.state.moveDate.getMonth();
-        // moveDate.day = this.state.moveDate.getDate();
-        //
-        // submitData.fullName = this.state.fullName;
-        // submitData.phoneNumber = this.state.phoneNumber;
-        // submitData.email = this.state.email;
-        // submitData.message = this.state.message;
-        // submitData.moveDate = moveDate;
-        // submitData.moveFromID = this.state.moveFromID;
-        // submitData.moveToID = this.state.moveToID;
-        // console.log("onSubmit");
-        // console.log("onChange fullName => " + this.state.fullName)
-        // console.log("onChange phoneNumber => " + this.state.phoneNumber)
-        // console.log("onChange email => " + this.state.email)
-        // console.log("onChange message => " + this.state.message)
-        // console.log("onChange moveDate Year => " + moveDate.year)
-        // console.log("onChange moveDate Month => " + moveDate.month)
-        // console.log("onChange moveDate Day => " + moveDate.day)
-        // console.log("onChange moveFromID => " + this.state.moveFromID)
-        // console.log("onChange moveToID => " + this.state.moveToID)
+        let submitData = {};
+
+        submitData.username = this.state.username;
+        submitData.password = this.state.password;
+        submitData.password2 = this.state.password2;
+        submitData.accessID = this.state.accessID;
+        submitData.companyName = this.state.companyName;
+        submitData.email = this.state.email;
+        submitData.phoneNumber = this.state.phoneNumber;
+        submitData.description = this.state.description;
+        submitData.coveredArea = this.state.coveredArea;
 
         //create account from mv company form
-        moon.post('api/company/create')
+        moon.post('api/company/create', submitData)
             .then((res) => {
                 console.log("Success" + JSON.stringify(res.data))
                 //redirect
@@ -83,6 +71,7 @@ class Register extends Component {
                 console.log("Error" + JSON.stringify(err.response.data))
                 this.setState({errors: err.response.data});
             })
+
     };
 
 
@@ -90,9 +79,31 @@ class Register extends Component {
 
     ////////////////////////////////////////
     onChange(e) {
-        // console.log(e.target.value);
+        console.log(e.target.value);
         this.setState({[e.target.name]: e.target.value});
     };
+    ////////////////////////////////////////
+
+
+    //onChange for covered area checkbox
+    ////////////////////////////////////////
+    inputChange(e) {
+        e.persist();
+
+        console.log(this.state.coveredArea);
+        if (e.target.checked === true) {
+            console.log(e.target.value);
+            this.setState({ coveredArea: this.state.coveredArea.concat([e.target.value]) })
+        }
+        else {
+            var array = [...this.state.coveredArea];
+            var index = array.indexOf(e.target.value)
+            if (index !== -1) {
+                array.splice(index, 1);
+                this.setState({coveredArea: array});
+            }
+        }
+    }
     ////////////////////////////////////////
 
 
@@ -102,6 +113,8 @@ class Register extends Component {
         return !Object.keys(obj).length;
     }
     ////////////////////////////////////////
+
+
 
 
     render() {
@@ -163,16 +176,16 @@ class Register extends Component {
                         {/*check covered area*/}
                             <label>Covered Area</label>
                         <div className="coveredarea">
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />Alberta
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />British Columbia
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />Manitoba
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />Nova Scotia
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />New Brunswick
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />Newfoundland and Labrador
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />Ontario
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />Prince Edward Island
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />Quebec
-                            <input type="checkbox" name="areaList" value={this.state.areaList} />Saskatchewan
+                            <input type="checkbox" name="coveredArea" value="Alberta" onChange={this.inputChange} />Alberta
+                            <input type="checkbox" name="areaList" value="British Columbia" onChange={this.inputChange} />British Columbia
+                            <input type="checkbox" name="areaList" value="Manitoba" onChange={this.inputChange} />Manitoba
+                            <input type="checkbox" name="areaList" value="Nova Scotia" onChange={this.inputChange} />Nova Scotia
+                            <input type="checkbox" name="areaList" value="New Brunswick" onChange={this.inputChange} />New Brunswick
+                            <input type="checkbox" name="areaList" value="Newfoundland and Labrador" onChange={this.inputChange} />Newfoundland and Labrador
+                            <input type="checkbox" name="areaList" value="Ontario" onChange={this.inputChange} />Ontario
+                            <input type="checkbox" name="areaList" value="Prince Edward Island" onChange={this.inputChange} />Prince Edward Island
+                            <input type="checkbox" name="areaList" value="Quebec" onChange={this.inputChange} />Quebec
+                            <input type="checkbox" name="areaList" value="Saskatchewan" onChange={this.inputChange} />Saskatchewan
                         </div>
 
 
