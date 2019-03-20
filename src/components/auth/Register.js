@@ -24,6 +24,7 @@ class Register extends Component {
             description: "",
             errors: "",
             message: "",
+            showArea: [],
             coveredArea: []
         }
 
@@ -38,6 +39,7 @@ class Register extends Component {
 
     //Click event for submit(get a quote)
     submit(e) {
+        console.log(this.state.coveredArea);
         console.log("THIS IS A SUBMIT BUTTON");
         //  submitボタンを押した時に動く関数
 
@@ -74,7 +76,28 @@ class Register extends Component {
 
     };
 
+    componentDidMount() {
 
+        console.log(JSON.stringify("💩"))
+
+        //get area of province
+        moon
+            .get('api/area/all')
+            .then(res => {
+                // console.log(JSON.stringify(data));
+                for (let i = 0; i < res.data.length; i++) {
+                    // console.log(res.data[i].name);
+                    this.setState({showArea: this.state.showArea.concat([res.data[i].name])});
+                    // this.setState({ areaList:[res.data[i].name] });
+                }
+
+                console.log(this.state.showArea);
+            })
+            .catch(err => {
+                this.disabledInput();
+                console.log(JSON.stringify(err));
+            })
+    }
 
 
     ////////////////////////////////////////
@@ -88,21 +111,21 @@ class Register extends Component {
     //onChange for covered area checkbox
     ////////////////////////////////////////
     inputChange(e) {
+
         e.persist();
 
         console.log(this.state.coveredArea);
         if (e.target.checked === true) {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             this.setState({ coveredArea: this.state.coveredArea.concat([e.target.value]) })
-        }
-        else {
-            var array = [...this.state.coveredArea];
-            var index = array.indexOf(e.target.value)
+        } else {
+            const array = [...this.state.coveredArea];
+            const index = array.indexOf(e.target.value)
             if (index !== -1) {
                 array.splice(index, 1);
                 this.setState({coveredArea: array});
             }
-        }
+        }　
     }
     ////////////////////////////////////////
 
@@ -176,18 +199,12 @@ class Register extends Component {
                         {/*check covered area*/}
                             <label>Covered Area</label>
                         <div className="coveredarea">
-                            <input type="checkbox" name="coveredArea" value="Alberta" onChange={this.inputChange} />Alberta
-                            <input type="checkbox" name="areaList" value="British Columbia" onChange={this.inputChange} />British Columbia
-                            <input type="checkbox" name="areaList" value="Manitoba" onChange={this.inputChange} />Manitoba
-                            <input type="checkbox" name="areaList" value="Nova Scotia" onChange={this.inputChange} />Nova Scotia
-                            <input type="checkbox" name="areaList" value="New Brunswick" onChange={this.inputChange} />New Brunswick
-                            <input type="checkbox" name="areaList" value="Newfoundland and Labrador" onChange={this.inputChange} />Newfoundland and Labrador
-                            <input type="checkbox" name="areaList" value="Ontario" onChange={this.inputChange} />Ontario
-                            <input type="checkbox" name="areaList" value="Prince Edward Island" onChange={this.inputChange} />Prince Edward Island
-                            <input type="checkbox" name="areaList" value="Quebec" onChange={this.inputChange} />Quebec
-                            <input type="checkbox" name="areaList" value="Saskatchewan" onChange={this.inputChange} />Saskatchewan
+                            {this.state.showArea.map((area, index) =>
+                                <div key={index}>
+                                    <input type="checkbox" name="coveredArea" value={area} onChange={this.inputChange}/>{area}
+                                </div>
+                            )}
                         </div>
-
 
                         {/*input description*/}
                         <div className="input__container--register">
