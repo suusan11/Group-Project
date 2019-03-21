@@ -19,6 +19,8 @@ import Setting from "./components/admin/Setting";
 import Lead from "./components/lead/Lead";
 import NotFound from "./components/not-found/NotFound";
 import PrivateRoute from "./components/common/PrivateRoute";
+import InvoiceDetail from "./components/invoive/InvoiceDetail"
+import InvoiceList from "./components/invoive/InvoiceList"
 
 
 import {
@@ -90,30 +92,90 @@ class App extends Component {
   render() {
     return (
         <Router>
-      <div className="App">
-<Route exact path="/login" component={Login} />
-<Route exact path="/Register" component={Register} />
-<Route exact path="/Company" component={Mv} />
-<Switch>
-            <PrivateRoute
-            isAuthorized={this.state.isAuthorized}
-              exact path="/admin" component={Admin}
-            />
- </Switch>
-<Route exact path="/AdminBalanceList" component={AdminBalanceList} />
-<Switch>
-            <PrivateRoute
-            isAuthorized={this.state.isAuthorized}
-              exact path="/Invoice" component={Invoice}
-            />
- </Switch>
+     <div className="App">
 
-<Route exact path="/CompanyInfo" component={CompanyInfo} />
-<Route exact path="/Setting" component={Setting} />
-<Route exact path="/" component={Lead} />
-<Route exact path="/not-found" component={NotFound} />
-      </div>
-       </Router>
+     {/* Top Page */}
+     <Route exact path="/" component={Lead}/>
+     {/* Login Page */}
+     <Route exact path="/login" component={Login}/>
+     {/* 404 error */}
+     <Route exact path="/not-found" component={NotFound} />
+
+     {/* Register Page */}
+     <Switch>
+       <PrivateRoute　
+         isAuthorized={this.state.isAuthorized}
+         exact path="/register" component={Register}
+         />
+     </Switch>
+
+     {/* Admin Top */}
+     <Switch>
+       <PrivateRoute
+       isAuthorized={this.state.isAuthorized}
+         exact path="/admin" component={Admin}
+       />
+     </Switch>
+
+     {/* Companies List */}
+     <Switch>
+       <PrivateRoute　
+       isAuthorized={this.state.isAuthorized}
+         exact path="/admin/companies" component={Mv}
+       />
+     </Switch>
+
+     {/* Single Company Info */}
+     <Switch>
+        <PrivateRoute
+        isAuthorized={this.state.isAuthorized}
+         exact path="/company/single/info" component={CompanyInfo}
+       />
+     </Switch>
+
+     {/* Balance List */}
+     <Switch>
+        <PrivateRoute　
+        isAuthorized={this.state.isAuthorized}
+         exact path="/balancelist" component={AdminBalanceList}
+       />
+     </Switch>
+
+     {/* Invoice (montly list) */}
+     <Switch>
+       <PrivateRoute
+       isAuthorized={this.state.isAuthorized}
+         exact path="/invoice/list" component={InvoiceList}
+       />
+     </Switch>
+
+     {/* Invoice detail */}
+     <Switch>
+       <PrivateRoute
+       isAuthorized={this.state.isAuthorized}
+         exact path="/invoice/detail/:year/:month" component={InvoiceDetail}
+       />
+     </Switch>
+
+     {/* Settings */}
+     <Switch>
+       <PrivateRoute
+       isAuthorized={this.state.isAuthorized}
+        exact path="/settings" component={Setting}
+       />
+     </Switch>
+
+     {/ *Refund History List Page*/}
+     <Switch>
+       <PrivateRoute
+       isAuthorized={this.state.isAuthorized}
+        exact path="/refund/list" component={RefundList}
+       />
+     </Switch>
+
+     </div>
+      </Router>
+
     );
   }
 }
