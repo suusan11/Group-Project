@@ -1,6 +1,8 @@
 import React,  { Component } from "react";
 import ReactDOM from "react-dom";
 
+import Loading from '../common/Spinner';
+
 //connect api and database
 import Moon from '../.././connection/Moon';
 
@@ -12,7 +14,10 @@ import '../../App.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
+//icons
+import coin from "../assets/coin.png";
+import sandclock from "../assets/sandclock.png";
+import track from "../assets/track.png";
 
 const moon = new Moon();
 
@@ -31,7 +36,12 @@ class Lead extends Component {
             bedRoomNumber: [],
             errors: "",
             areaList: [],
+            areaListTo: [],
+            items: [],
+            itemsTo: [],
             Data:[],
+            prov: [],
+            isLoading: false
         }
 
 
@@ -39,6 +49,9 @@ class Lead extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.ayaka = this.ayaka.bind(this);
         this.isEmpty = this.isEmpty.bind(this);
+        this.filterList = this.filterList.bind(this);
+        this.getProvFrom = this.getProvFrom.bind(this);
+        this.getProvTo = this.getProvTo.bind(this);
     }
 
 
@@ -130,18 +143,22 @@ class Lead extends Component {
 
         console.log(JSON.stringify("💩"))
 
-        // http://localhost:5050/api/area/all
         moon
             .get('api/area/all')
             .then(res =>{
-                // console.log(JSON.stringify(data));
+
+                let provArray = [];
+
                 for(let i = 0; i < res.data.length; i++) {
-                    // console.log(res.data[i].name);
-                    this.setState({ areaList: this.state.areaList.concat([res.data[i].city] + ', ' + [res.data[i].admin]) });
-                    // this.setState({ areaList:[res.data[i].name] });
+                    let obj = {};
+                    obj['id'] = res.data[i]._id;
+                    obj['name'] = res.data[i].name;
+                    provArray.push(obj);
                 }
 
-                console.log(this.state.areaList);
+                this.setState({
+                    prov: provArray });
+
             })
             .catch(err => {
                 this.disabledInput();
@@ -168,11 +185,124 @@ class Lead extends Component {
             })
     }
 
+    componentWillMount() {
+        moon
+            .get('api/area/all')
+            .then(res =>{
+
+                let provArray = [];
+
+                for(let i = 0; i < res.data.length; i++) {
+                    let obj = {};
+                    obj['id'] = res.data[i]._id;
+                    obj['name'] = res.data[i].name;
+                    provArray.push(obj);
+                }
+
+                this.setState({
+                    prov: provArray });
+
+            })
+            .catch(err => {
+                this.disabledInput();
+                console.log(JSON.stringify(err));
+            })
+    }
 
 
+    // Filtering List of area sorted by Province
+    ////////////////////////////////////////
+    filterList = (e) => {
+        const updateList = this.state.areaList.filter((item) => {
+            return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
+        })
+        this.setState({items: updateList})
+    };
+
+    filterToList = (e) => {
+        const updateToList = this.state.areaListTo.filter((item) => {
+            return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
+        })
+        this.setState({itemsTo: updateToList})
+    };
+    ////////////////////////////////////////
 
 
+    // Get data by Province
+    ////////////////////////////////////////
+    getProvFrom(e){
 
+        this.setState({isLoading:true})
+
+        e.persist();
+
+        this.state.prov.forEach(prov => {
+
+            if(prov.name === e.target.value ){
+
+                moon
+                    .get(`api/area/search/citylist/byareaid/${prov.id}`)
+                    .then(res =>{
+                        this.setState({isLoading:false})
+                        // this.state.areaList.push(res.city);
+                        // console.log(this.state.areaList);
+
+                        let arrayCity = [];
+                        res.data.map( eachCity => {
+                            return arrayCity.push(eachCity.city);
+                        });
+
+                        this.setState({areaList:arrayCity});
+
+                    })
+                    .catch(err => {
+                        this.disabledInput();
+                        this.setState({isLoading:false})
+                        console.log(JSON.stringify(err));
+                    })
+            } else return 0
+
+        })
+
+
+    };
+
+    getProvTo(e){
+
+        this.setState({isLoading:true})
+
+        e.persist();
+
+        this.state.prov.forEach(prov => {
+
+            if(prov.name === e.target.value ){
+
+                moon
+                    .get(`api/area/search/citylist/byareaid/${prov.id}`)
+                    .then(res =>{
+                        this.setState({isLoading:false})
+                        this.state.areaListTo.push(res.city);
+                        console.log(res);
+
+                        let arrayToCity = [];
+                        res.data.map( eachCity => {
+                            return arrayToCity.push(eachCity.city);
+                        });
+
+                        this.setState({areaListTo:arrayToCity});
+                        console.log(this.state.areaListTo);
+                    })
+                    .catch(err => {
+                        this.disabledInput();
+                        this.setState({isLoading:false})
+                        console.log(JSON.stringify(err));
+                    })
+            } else return 0
+
+        })
+
+
+    };
 
 
     // Check if the object is empty
@@ -183,15 +313,10 @@ class Lead extends Component {
     ////////////////////////////////////////
 
 
-
-//     this.state.Data.ForEach((item, index) => {
-//     // this.state.dataRows.concat(createData(this.state.Data.admin, this.state.Data.city));
-//     console.log(item);
-// })
-
 render() {
         return (
             <div className="App">
+                <Loading isLoading={this.state.isLoading} />
                 <header>
                     <div className="header__flex">
                         <div className="header__logo">
@@ -240,21 +365,42 @@ render() {
                                     {/*select moving from*/}
                                     <div className="input__city">
                                         <div className="city__label">Moving from</div>
-                                        <select id="errCatch" ref="test"
-                                                className="input__city-item">{this.state.areaList.map((area, index) =>
-                                            <option value={this.state.moveFromID} key={index}
-                                                    name="areaList">{area}</option>)}</select>
+                                        <select
+                                            id="errCatch"
+                                            onChange={this.getProvFrom}
+                                            className="input__city-item">
+                                            <option value=''>Province</option>
+                                            {
+                                                this.state.prov.map((prov, index) =>
+                                                    <option key={index} name="areaList">{prov.name}</option>)}
+                                        </select>
+                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item"　onChange={this.filterList} />
+                                        <div>
+                                            {this.state.items.map((area, index) => {
+                                                return ( <li key={index} >{area}</li> )
+                                            })}
+                                        </div>
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveFromID}</div>
                                     </div>
 
                                     {/*select moving to*/}
                                     <div className="input__city">
                                         <div className="city__label">Moving to</div>
-                                        {/*<input className="input__city-item" value={this.state.moveToId} name="moveToId" placeholder="City, Province" onChange={this.onChange} />*/}
-                                        <select id="errCatch" ref="test"
-                                                className="input__city-item">{this.state.areaList.map((area, index) =>
-                                            <option value={this.state.moveToID} key={index}
-                                                    name="areaList">{area}</option>)}</select>
+                                        <select
+                                            id="errCatch"
+                                            onChange={this.getProvTo}
+                                            className="input__city-item">
+                                            <option value=''>Province</option>
+                                            {
+                                                this.state.prov.map((prov, index) =>
+                                                    <option key={index} name="areaList">{prov.name}</option>)}
+                                        </select>
+                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item"　onChange={this.filterToList} />
+                                            <div>
+                                                {this.state.itemsTo.map((area, index) => {
+                                                    return ( <li key={index} >{area}</li> )
+                                                })}
+                                            </div>
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveToID}</div>
                                     </div>
 
@@ -277,6 +423,33 @@ render() {
                                 </button>
                             </form>
                         </div>
+                    </div>
+                </section>
+
+                <section className="values">
+                    <h2>Why mymovingcost.com ?</h2>
+                    <div className="values__flex">
+                        <div className="values__flex--item">
+                            <img src={sandclock} alt="sand clock"/>
+                            <h3>Save time</h3>
+                            <p>It takes only 1 minute</p>
+                        </div>
+                        <div className="values__flex--item">
+                            <img src={coin} alt="coin"/>
+                            <h3>Save money</h3>
+                            <p>Save up to %70 on your move</p>
+                        </div>
+                        <div className="values__flex--item">
+                            <img src={track} alt="tracking car"/>
+                            <h3>Compare top movers</h3>
+                            <p>Receive quotes from different movers</p>
+                        </div>
+                    </div>
+                    <div className="info">
+                        <p className="info--item">We are here to help you to contact with the reliable moving companies and receive the best service for your upcoming move.</p>
+                        <p className="info--item">Whether you are moving locally or long distance, you will be able to compare the moving companies with one click.</p>
+                        <p className="info--item">You will receive pricing information and plan your budget appropriately.</p>
+                        <p className="info--item">You will also receive information regarding the services of the movers and may decide to go with the one according to your needs.</p>
                     </div>
                 </section>
 
