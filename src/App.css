@@ -131,7 +131,7 @@ html {
 .main__container {
   position: relative;
   width: 100%;
-  height: 520px;
+  height: 600px;
   background: url("components/assets/bg-sample.jpeg") center;
 }
 
@@ -167,16 +167,21 @@ html {
   padding: 2%;
 }
 
-.main__container .form input, .main__container .form select {
+.main__container .form input {
   border: 1px solid #E5E3E3;
   outline: none;
   width: 100%;
   height: 100%;
 }
-
-.main__container .form__top, .main__container .form__bottom {
+/*.main__container .form select {*/
+  /*border: 0;*/
+  /*outline: 1px solid #E5E3E3;*/
+  /*outline-offset: -1px;*/
+  /*background-color: #FFFFFF;*/
+/*}*/
+.main__container .form__top, .main__container .form__middle, .main__container .form__bottom {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .main__container .form__top .input__container {
@@ -189,20 +194,19 @@ html {
   width: 100%;
 }
 
-.main__container .form__bottom {
-  margin-top: 5%;
+.main__container .form__middle, .main__container .form__bottom {
+  margin-top: 3%;
 }
-
-.main__container .form__bottom .input__city {
-  display: inline-block;
-  width: 35%;
+.main__container .form__middle .input__city {
+  width: 50%;
   color: #FFFFFF;
 }
 
-.main__container .form__bottom .input__city-item {
-  width: 100%;
+.main__container .form__middle .input__city-item {
+  width: 50%;
   height: 55px;
   color: #545454;
+  padding: 2%;
 }
 
 .main__container .form__bottom .input-date {
@@ -211,12 +215,12 @@ html {
 }
 .main__container .form__bottom .input-bottom,
 .main__container .form__bottom .select {
-  width: 50%;
+  width: 30%;
   height: 55px;
   margin-top: 21px;
 }
 
-.main__container .form__bottom .select {
+.main__container .form__middle .select, .main__container .form__bottom .select {
   display: inline-block;
   border: 1px solid #E5E3E3;
   background-color: #FFFFFF;
@@ -450,13 +454,18 @@ div.error{
     text-align: left;
 }
 .coveredarea input {
-    margin: 0 0 3% 3%;
+    margin: 0 2% 3% 3%;
+}
+.coveredarea .showCity {
+  border: none;
+  margin-left: 5px;
+  font-size: 16px;
 }
 .input__container--register textarea {
   width: 100%;
   height: 100px;
 }
-.form--register button{
+.form--register .sendButton{
   display: block;
   width: 180px;
   padding: 1% 0;

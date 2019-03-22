@@ -360,7 +360,7 @@ render() {
                                     </div>
                                 </div>
 
-                                <div className="form__bottom">
+                                <div className="form__middle">
 
                                     {/*select moving from*/}
                                     <div className="input__city">
@@ -389,13 +389,13 @@ render() {
                                         <select
                                             id="errCatch"
                                             onChange={this.getProvTo}
-                                            className="input__city-item">
+                                            className="input__city-item select">
                                             <option value=''>Province</option>
                                             {
                                                 this.state.prov.map((prov, index) =>
                                                     <option key={index} name="areaList">{prov.name}</option>)}
                                         </select>
-                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item"　onChange={this.filterToList} />
+                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item select" onChange={this.filterToList} />
                                             <div>
                                                 {this.state.itemsTo.map((area, index) => {
                                                     return ( <li key={index} >{area}</li> )
@@ -403,6 +403,9 @@ render() {
                                             </div>
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveToID}</div>
                                     </div>
+                                </div>
+
+                                <div className="form__bottom">
 
                                     {/*input date*/}
                                     <div className="input__container">
@@ -418,6 +421,7 @@ render() {
                                                 name="bedRoom">{bedRoom}</option>)}</select>
                                     <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.bedRoomNumber}</div>
                                 </div>
+
                                 <button className="sendButton" onClick={this.ayaka} type="submit"
                                         name="submitButton">Get a Quote
                                 </button>
