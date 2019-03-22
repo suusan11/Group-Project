@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import setAuthToken from '../../config/auth/setAuthToken';
 
-class Mv extends React.Component {
+class CompaniesList extends React.Component {
     ////////////////////////////////////////
   constructor(props){
     super(props);
@@ -40,7 +40,7 @@ class Mv extends React.Component {
 
  render(){
    return (
-     <div>This is Mv page
+     <div>This is CompaniesList page
 
      <header>
            {this.state.isAuthorized? "": <Link to="/login"> [Login]  </Link>}
@@ -52,4 +52,4 @@ class Mv extends React.Component {
    );
  }
 }
-export default Mv;
+export default CompaniesList;

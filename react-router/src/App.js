@@ -10,17 +10,17 @@ import setAuthToken from './config/auth/setAuthToken';
 ////////////////////////////////////////
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import Mv from "./components/company/Mv";
-import Admin from "./components/admin/Admin";
-import AdminBalanceList from "./components/admin/AdminBalanceList";
-import Invoice from "./components/admin/Invoice";
-import CompanyInfo from "./components/admin/CompanyInfo";
-import Setting from "./components/admin/Setting";
+import CompaniesList from "./components/private/CompaniesList";
+import CompanyInfo from "./components/private/CompanyInfo";
+import LoginTop from "./components/private/LoginTop";
+import AdminBalanceList from "./components/private/AdminBalanceList";
+import Setting from "./components/private/Setting";
 import Lead from "./components/lead/Lead";
 import NotFound from "./components/not-found/NotFound";
 import PrivateRoute from "./components/common/PrivateRoute";
-import InvoiceDetail from "./components/invoive/InvoiceDetail"
-import InvoiceList from "./components/invoive/InvoiceList"
+import InvoiceDetail from "./components/invoice/InvoiceDetail"
+import InvoiceList from "./components/invoice/InvoiceList"
+import RefundList from "./components/refund/RefundList"
 
 
 import {
@@ -56,11 +56,11 @@ class App extends Component {
 
   // First time of showing this component or when it's reloaded
   ////////////////////////////////////////
-  componentDidMount() {
+  componentWillMount() {
 
     //  --- Check for token --- //
       if (localStorage.jwtToken) {
-
+console.log("🐱🐱🐱🐱isAuthorized "+this.state.isAuthorized);
         // Set auth token header auth if it exists
         setAuthToken(localStorage.jwtToken);
         // Decode token and get user info and exp
@@ -71,7 +71,7 @@ class App extends Component {
           this.setState({ status:"User is logging in as"});
 
           console.log("🐱🐱🐱🐱currentUser "+JSON.stringify(this.state.currentUser));
-        console.log("🐱🐱🐱🐱isAuthorized "+this.state.isAuthorized);
+
         console.log("🐱🐱🐱🐱status "+this.state.status);
 
         // Check for expired token
@@ -109,11 +109,11 @@ class App extends Component {
          />
      </Switch>
 
-     {/* Admin Top */}
+     {/* Login Top */}
      <Switch>
        <PrivateRoute
        isAuthorized={this.state.isAuthorized}
-         exact path="/admin" component={Admin}
+         exact path="/d" component={LoginTop}
        />
      </Switch>
 
@@ -121,7 +121,7 @@ class App extends Component {
      <Switch>
        <PrivateRoute　
        isAuthorized={this.state.isAuthorized}
-         exact path="/admin/companies" component={Mv}
+         exact path="/private/companies" component={CompaniesList}
        />
      </Switch>
 
@@ -165,7 +165,7 @@ class App extends Component {
        />
      </Switch>
 
-     {/ *Refund History List Page*/}
+     {/*Refund History List Page*/}
      <Switch>
        <PrivateRoute
        isAuthorized={this.state.isAuthorized}

@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import setAuthToken from '../../config/auth/setAuthToken';
 
-class Admin extends React.Component {
+class LoginTop extends React.Component {
     ////////////////////////////////////////
   constructor(props){
     super(props);
@@ -35,21 +35,24 @@ class Admin extends React.Component {
     this.setState({ currentUser: {}});
     this.setState({ isAuthorized: false});
     this.setState({ status:''});
+
   }
 
 
  render(){
    return (
-     <div>This is Admin page
+     <div>This is LoginTop page
 
      <header>
-           {this.state.isAuthorized? "": <Link to="/login"> [Login]  </Link>}
-           {this.state.isAuthorized?  <button onClick={this.logout}> [Logout] </button>:""}
+           {this.state.isAuthorized? "": <Link to="/">[Logout]</Link>}
+
          </header>
+
+
 
      </div>
 
    );
  }
 }
-export default Admin;
+export default LoginTop;

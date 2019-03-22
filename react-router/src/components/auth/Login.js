@@ -76,10 +76,10 @@ class Login extends React.Component {
       console.log("User data"+JSON.stringify(decoded))
       if(decoded.role==="administrator"){
         //redirect
-        this.props.history.push('/admin');
+        this.props.history.push('/d');
       }else if(decoded.role==="standard"){
         //redirect
-        this.props.history.push('/company');
+        this.props.history.push('/d');
       }else{
         console.log("Permission Error => "+decoded.role);
       }
