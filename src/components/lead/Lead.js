@@ -1,6 +1,8 @@
 import React,  { Component } from "react";
 import ReactDOM from "react-dom";
 
+import Loading from '../common/Spinner';
+
 //connect api and database
 import Moon from '../.././connection/Moon';
 
@@ -34,8 +36,12 @@ class Lead extends Component {
             bedRoomNumber: [],
             errors: "",
             areaList: [],
+            areaListTo: [],
             items: [],
+            itemsTo: [],
             Data:[],
+            prov: [],
+            isLoading: false
         }
 
 
@@ -44,6 +50,8 @@ class Lead extends Component {
         this.ayaka = this.ayaka.bind(this);
         this.isEmpty = this.isEmpty.bind(this);
         this.filterList = this.filterList.bind(this);
+        this.getProvFrom = this.getProvFrom.bind(this);
+        this.getProvTo = this.getProvTo.bind(this);
     }
 
 
@@ -135,24 +143,27 @@ class Lead extends Component {
 
         console.log(JSON.stringify("💩"))
 
-        // http://localhost:5050/api/area/all
-        // moon
-        //     .get('api/area/all')
-        //     // .then(blob => blob.json())
-        //     .then(res =>{
-        //         // console.log(JSON.stringify(data));
-        //         for(let i = 0; i < res.data.length; i++) {
-        //             // console.log(res.data[i].name);
-        //             this.setState({ areaList: this.state.areaList.concat([res.data[i].city] + ", " + [res.data[i].city])});
-        //             // this.setState({ areaList:[res.data[i].name] });
-        //         }
-        //
-        //         // console.log(this.state.areaList);
-        //     })
-        //     .catch(err => {
-        //         this.disabledInput();
-        //         console.log(JSON.stringify(err));
-        //     })
+        moon
+            .get('api/area/all')
+            .then(res =>{
+
+                let provArray = [];
+
+                for(let i = 0; i < res.data.length; i++) {
+                    let obj = {};
+                    obj['id'] = res.data[i]._id;
+                    obj['name'] = res.data[i].name;
+                    provArray.push(obj);
+                }
+
+                this.setState({
+                    prov: provArray });
+
+            })
+            .catch(err => {
+                this.disabledInput();
+                console.log(JSON.stringify(err));
+            })
 
 
         //get room type
@@ -177,13 +188,19 @@ class Lead extends Component {
     componentWillMount() {
         moon
             .get('api/area/all')
-                // .then(blob => blob.json())
             .then(res =>{
-                // console.log(JSON.stringify(data));
+
+                let provArray = [];
+
                 for(let i = 0; i < res.data.length; i++) {
-                // console.log(res.data[i].name);
-                this.setState({ areaList: this.state.areaList.concat([res.data[i].city] + ", " + [res.data[i].admin])});
+                    let obj = {};
+                    obj['id'] = res.data[i]._id;
+                    obj['name'] = res.data[i].name;
+                    provArray.push(obj);
                 }
+
+                this.setState({
+                    prov: provArray });
 
             })
             .catch(err => {
@@ -193,17 +210,99 @@ class Lead extends Component {
     }
 
 
+    // Filtering List of area sorted by Province
     ////////////////////////////////////////
-    filterList(e) {
+    filterList = (e) => {
         const updateList = this.state.areaList.filter((item) => {
             return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
-
         })
         this.setState({items: updateList})
+    };
 
-    }
+    filterToList = (e) => {
+        const updateToList = this.state.areaListTo.filter((item) => {
+            return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
+        })
+        this.setState({itemsTo: updateToList})
+    };
     ////////////////////////////////////////
 
+
+    // Get data by Province
+    ////////////////////////////////////////
+    getProvFrom(e){
+
+        this.setState({isLoading:true})
+
+        e.persist();
+
+        this.state.prov.forEach(prov => {
+
+            if(prov.name === e.target.value ){
+
+                moon
+                    .get(`api/area/search/citylist/byareaid/${prov.id}`)
+                    .then(res =>{
+                        this.setState({isLoading:false})
+                        // this.state.areaList.push(res.city);
+                        // console.log(this.state.areaList);
+
+                        let arrayCity = [];
+                        res.data.map( eachCity => {
+                            return arrayCity.push(eachCity.city);
+                        });
+
+                        this.setState({areaList:arrayCity});
+
+                    })
+                    .catch(err => {
+                        this.disabledInput();
+                        this.setState({isLoading:false})
+                        console.log(JSON.stringify(err));
+                    })
+            } else return 0
+
+        })
+
+
+    };
+
+    getProvTo(e){
+
+        this.setState({isLoading:true})
+
+        e.persist();
+
+        this.state.prov.forEach(prov => {
+
+            if(prov.name === e.target.value ){
+
+                moon
+                    .get(`api/area/search/citylist/byareaid/${prov.id}`)
+                    .then(res =>{
+                        this.setState({isLoading:false})
+                        this.state.areaListTo.push(res.city);
+                        console.log(res);
+
+                        let arrayToCity = [];
+                        res.data.map( eachCity => {
+                            return arrayToCity.push(eachCity.city);
+                        });
+
+                        this.setState({areaListTo:arrayToCity});
+                        console.log(this.state.areaListTo);
+                    })
+                    .catch(err => {
+                        this.disabledInput();
+                        this.setState({isLoading:false})
+                        console.log(JSON.stringify(err));
+                    })
+            } else return 0
+
+        })
+
+
+    };
 
 
     // Check if the object is empty
@@ -214,15 +313,10 @@ class Lead extends Component {
     ////////////////////////////////////////
 
 
-
-//     this.state.Data.ForEach((item, index) => {
-//     // this.state.dataRows.concat(createData(this.state.Data.admin, this.state.Data.city));
-//     console.log(item);
-// })
-
 render() {
         return (
             <div className="App">
+                <Loading isLoading={this.state.isLoading} />
                 <header>
                     <div className="header__flex">
                         <div className="header__logo">
@@ -271,26 +365,40 @@ render() {
                                     {/*select moving from*/}
                                     <div className="input__city">
                                         <div className="city__label">Moving from</div>
-                                        <input id="errCatch" ref="test" className="input__city-item"　onChange={this.filterList} />
-                                            <div>
-                                                {this.state.items.map((area, index) => {
-                                                    return (
-                                                        <li value={this.state.moveFromID} key={index} name="areaList">{area}</li>
-                                                    )
-                                                })}
-                                            </div>
+                                        <select
+                                            id="errCatch"
+                                            onChange={this.getProvFrom}
+                                            className="input__city-item">
+                                            <option value=''>Province</option>
+                                            {
+                                                this.state.prov.map((prov, index) =>
+                                                    <option key={index} name="areaList">{prov.name}</option>)}
+                                        </select>
+                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item"　onChange={this.filterList} />
+                                        <div>
+                                            {this.state.items.map((area, index) => {
+                                                return ( <li key={index} >{area}</li> )
+                                            })}
+                                        </div>
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveFromID}</div>
                                     </div>
 
                                     {/*select moving to*/}
                                     <div className="input__city">
                                         <div className="city__label">Moving to</div>
-                                        <input id="errCatch" ref="test" className="input__city-item"　onChange={this.filterList} />
+                                        <select
+                                            id="errCatch"
+                                            onChange={this.getProvTo}
+                                            className="input__city-item">
+                                            <option value=''>Province</option>
+                                            {
+                                                this.state.prov.map((prov, index) =>
+                                                    <option key={index} name="areaList">{prov.name}</option>)}
+                                        </select>
+                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item"　onChange={this.filterToList} />
                                             <div>
-                                                {this.state.items.map((area, index) => {
-                                                    return (
-                                                        <li value={this.state.moveToID} key={index} name="areaList">{area}</li>
-                                                    )
+                                                {this.state.itemsTo.map((area, index) => {
+                                                    return ( <li key={index} >{area}</li> )
                                                 })}
                                             </div>
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveToID}</div>
