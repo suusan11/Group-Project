@@ -43,11 +43,11 @@ main {
 }
 
 section {
-  margin: 50px 0;
+  margin: 30px 0;
 }
 
 h1 {
-  font-size: 1.777rem;
+  font-size: 1.666rem;
 }
 
 h2 {
@@ -107,6 +107,9 @@ header .header__flex .header-info p {
   font-weight: lighter;
   margin-right: 5%;
 }
+header .header__flex .header-info a {
+  color: #545454;
+}
 
 html {
   font-family: "Overpass", sans-serif;
@@ -144,11 +147,11 @@ html {
 
 .main__container .catchcopy-box {
   position: absolute;
-  top: -50px;
-  left: 10%;
-  width: 80%;
+  top: 20px;
+  left: 25%;
+  width: 55%;
   height: 100px;
-  background-color: #57BDD1;
+  background-color: #D91F4B;
   text-align: center;
 }
 
@@ -227,9 +230,10 @@ html {
 }
 
 .main__container .form .sendButton {
+  position: relative;
   display: block;
-  width: 180px;
-  padding: 1% 0;
+  width: 200px;
+  height: 60px;
   background-color: #D91F4B;
   font-size: 1.388rem;
   color: #FFFFFF;
@@ -309,6 +313,7 @@ html {
   }
 }
 
+/*----- values section -----*/
 .values {
   width: 100%;
 }
@@ -337,7 +342,7 @@ html {
   margin: 0 auto;
 }
 .info--item::before {
-  content: url("./components/assets/check.png");
+  content: url("./components/assets/check-pink.png");
   padding-right: 2%;
 }
 
@@ -362,6 +367,7 @@ html {
     margin-top: 0;
   }
 }
+/*-----------------------------*/
 
 html {
   font-family: "Overpass", sans-serif;

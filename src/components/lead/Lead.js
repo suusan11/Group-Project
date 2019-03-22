@@ -15,9 +15,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 //icons
-import coin from "../assets/coin.png";
-import sandclock from "../assets/sandclock.png";
-import track from "../assets/track.png";
+import coin from "../assets/coin-pink.png";
+import sandclock from "../assets/sandclock-pink.png";
+import track from "../assets/track-pink.png";
 
 const moon = new Moon();
 
@@ -325,6 +325,7 @@ render() {
                         <div className="header-info">
                             <p>XXXXXX@gmail.com</p>
                             <p>1-111-1111</p>
+                            <p><a href="/">Log in</a></p>
                         </div>
                     </div>
                 </header>
@@ -460,7 +461,6 @@ render() {
                 <footer>
                     <div className="footer__flex">
                         <div className="footer__flex--left">
-                            <p><a href="/">Log in</a></p>
                             <p><a href="/">Privacy Policy</a></p>
                         </div>
                         <div className="footer__flex--right">
