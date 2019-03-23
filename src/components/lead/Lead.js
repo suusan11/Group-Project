@@ -2,6 +2,7 @@ import React,  { Component } from "react";
 import ReactDOM from "react-dom";
 
 import Loading from '../common/Spinner';
+import Autosuggest from 'react-autosuggest';
 
 //connect api and database
 import Moon from '../.././connection/Moon';
@@ -20,6 +21,29 @@ import sandclock from "../assets/sandclock.png";
 import track from "../assets/track.png";
 
 const moon = new Moon();
+
+// Imagine you have a list of languages that you'd like to autosuggest.
+
+const getSuggestions = (value, areaList) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0 ? [] : areaList.filter(lang => // 2: ここで "areaList" にフィルターをかける
+        lang.toLowerCase().slice(0, inputLength) === inputValue
+    );
+};
+
+// When suggestion is clicked, Autosuggest needs to populate the input
+// based on the clicked suggestion. Teach Autosuggest how to calculate the
+// input value for every given suggestion.
+const getSuggestionValue = suggestion => suggestion; // 3: ここも変える
+
+// Use your imagination to render suggestions.
+const renderSuggestion = suggestion => (
+    <div>
+        {suggestion}  {/*// 4: ここでドロップダウン出力*/}
+    </div>
+);
 
 class Lead extends Component {
 
@@ -41,17 +65,21 @@ class Lead extends Component {
             itemsTo: [],
             Data:[],
             prov: [],
-            isLoading: false
+            isLoading: false,
+            value: '',
+            suggestions: [],
         }
+
 
 
         this.onChange = this.onChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.ayaka = this.ayaka.bind(this);
         this.isEmpty = this.isEmpty.bind(this);
-        this.filterList = this.filterList.bind(this);
         this.getProvFrom = this.getProvFrom.bind(this);
         this.getProvTo = this.getProvTo.bind(this);
+
+        this.input = React.createRef();
     }
 
 
@@ -111,7 +139,6 @@ class Lead extends Component {
 
     ////////////////////////////////////////
     onChange(e) {
-        // console.log(e.target.value);
         this.setState({[e.target.name]: e.target.value});
     };
     ////////////////////////////////////////
@@ -121,7 +148,7 @@ class Lead extends Component {
 
     ////////////////////////////////////////
     disabledInput = () => {
-        var element = ReactDOM.findDOMNode(this.refs.test);
+        var element = ReactDOM.findDOMNode(this.input);
         element.setAttribute('disabled', 'true');
     };
     ////////////////////////////////////////
@@ -177,7 +204,7 @@ class Lead extends Component {
                     // this.setState({ areaList:[res.data[i].name] });
                 }
 
-               console.log(this.state.bedRoomNumber);
+               // console.log(this.state.bedRoomNumber);
             })
             .catch(err => {
                 this.disabledInput();
@@ -208,24 +235,6 @@ class Lead extends Component {
                 console.log(JSON.stringify(err));
             })
     }
-
-
-    // Filtering List of area sorted by Province
-    ////////////////////////////////////////
-    filterList = (e) => {
-        const updateList = this.state.areaList.filter((item) => {
-            return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
-        })
-        this.setState({items: updateList})
-    };
-
-    filterToList = (e) => {
-        const updateToList = this.state.areaListTo.filter((item) => {
-            return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
-        })
-        this.setState({itemsTo: updateToList})
-    };
-    ////////////////////////////////////////
 
 
     // Get data by Province
@@ -282,7 +291,7 @@ class Lead extends Component {
                     .then(res =>{
                         this.setState({isLoading:false})
                         this.state.areaListTo.push(res.city);
-                        console.log(res);
+                        // console.log(res);
 
                         let arrayToCity = [];
                         res.data.map( eachCity => {
@@ -290,7 +299,6 @@ class Lead extends Component {
                         });
 
                         this.setState({areaListTo:arrayToCity});
-                        console.log(this.state.areaListTo);
                     })
                     .catch(err => {
                         this.disabledInput();
@@ -312,8 +320,48 @@ class Lead extends Component {
     }
     ////////////////////////////////////////
 
+    /////////////////////////
+    onChangeValue = (event, { newValue }) => {
+        this.setState({
+            value: newValue
+        });
+    };
+    /////////////////////////
+
+    // Autosuggest will call this function every time you need to update suggestions.
+    // You already implemented this logic above, so just use it.
+    /////////////////////////
+    onSuggestionsFetchRequested = ({ value }) => {
+        this.setState({
+            suggestions: getSuggestions(value, this.state.areaList) // 1: ここで "areaList" 渡す
+        });
+    };
+    /////////////////////////
+
+    // Autosuggest will call this function every time you need to clear suggestions.
+    /////////////////////////
+    onSuggestionsClearRequested = () => {
+        this.setState({
+            suggestions: []
+        });
+    };
+    /////////////////////////
+
+
+
 
 render() {
+
+    const { value, suggestions } = this.state;
+
+    // Autosuggest will pass through all these props to the input.
+    const inputProps = {
+        placeholder: 'City',
+        value,
+        onChange: this.onChangeValue
+
+    };
+
         return (
             <div className="App">
                 <Loading isLoading={this.state.isLoading} />
@@ -374,12 +422,14 @@ render() {
                                                 this.state.prov.map((prov, index) =>
                                                     <option key={index} name="areaList">{prov.name}</option>)}
                                         </select>
-                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item"　onChange={this.filterList} />
-                                        <div>
-                                            {this.state.items.map((area, index) => {
-                                                return ( <li key={index} >{area}</li> )
-                                            })}
-                                        </div>
+                                        <Autosuggest
+                                            suggestions={suggestions}
+                                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                            getSuggestionValue={getSuggestionValue}
+                                            renderSuggestion={renderSuggestion}
+                                            inputProps={inputProps}
+                                        />
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveFromID}</div>
                                     </div>
 
@@ -395,12 +445,14 @@ render() {
                                                 this.state.prov.map((prov, index) =>
                                                     <option key={index} name="areaList">{prov.name}</option>)}
                                         </select>
-                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item"　onChange={this.filterToList} />
-                                            <div>
-                                                {this.state.itemsTo.map((area, index) => {
-                                                    return ( <li key={index} >{area}</li> )
-                                                })}
-                                            </div>
+                                        <Autosuggest
+                                            suggestions={suggestions}
+                                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                            getSuggestionValue={getSuggestionValue}
+                                            renderSuggestion={renderSuggestion}
+                                            inputProps={inputProps}
+                                        />
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveToID}</div>
                                     </div>
 
