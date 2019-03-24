@@ -25,11 +25,11 @@ import Moon from '../.././connection/Moon';
 const moon = new Moon();
 
 let counter = 0;
-function createData(leadId, phone, email, origin, destination, date) {
+function createData(fullName, phone, email, origin, destination, date) {
     counter += 1;
 
     //オブジェクトの分割代入？
-    return { id: counter, leadId, phone, email, origin, destination, date };
+    return { id: counter, fullName, phone, email, origin, destination, date };
 }//新規データ作成, 下の方にクラス'EnhancedTable'にあるオブジェクト（データ一覧）とこちらの関数が繋がっている。
 
 function desc(a, b, orderBy) {
@@ -57,7 +57,7 @@ function getSorting(order, orderBy) {
 }//ソート関数
 
 const rows = [
-    { id: 'leadId', numeric: false, disablePadding: true, label: 'ID' },
+    { id: 'fullName', numeric: false, disablePadding: true, label: 'ID' },
     { id: 'phone', numeric: false, disablePadding: false, label: 'PHONE' },
     { id: 'email', numeric: false, disablePadding: false, label: 'E-MAIL' },
     { id: 'origin', numeric: false, disablePadding: false, label: 'ORIGIN' },
@@ -223,13 +223,14 @@ class EnhancedTable extends React.Component {
         moon
             .get('api/client/all')
             .then(res => {
-                for (let i = 0; i < res.data.length; i++) {
-                    // this.setState({ data: [createData(this.state.data.concat([res.data[i].id],[res.data[i].fullName]))]});
-                    // createDataに{ id: counter, leadId, phone, email, origin, destination, date };がリターンして、state.dataに追加される
-                    this.setState({ data: this.state.data.concat([createData([res.data[i]._id],[res.data[i].phoneNumber],[res.data[i].email],[res.data[i].moveFromID],[res.data[i].moveToID],[res.data[i].moveDate.day]+ "/" +[res.data[i].moveDate.month]+ "/" +[res.data[i].moveDate.year] )])});
-                    //createDataの変数のArray[]無くても動く
+                // for (let i = 0; i < res.data.length; i++) {
+                //     // this.setState({ data: [createData(this.state.data.concat([res.data[i].id],[res.data[i].fullName]))]});
+                //     // createDataに{ id: counter, leadId, phone, email, origin, destination, date };がリターンして、state.dataに追加される
+                //     // this.setState({ data: this.state.data.concat([createData([res.data[i]._id],[res.data[i].fullName], [res.data[i].phoneNumber],[res.data[i].email],[res.data[i].moveFromID],[res.data[i].moveToID],[res.data[i].moveDate.day]+ "/" +[res.data[i].moveDate.month]+ "/" +[res.data[i].moveDate.year] )])});
+                //     //createDataの変数のArray[]無くても動く
                     // this.setState({ data: this.state.data.concat([createData(res.data[i]._id,res.data[i].phoneNumber,res.data[i].email,res.data[i].moveFromID,res.data[i].moveToID,res.data[i].moveDate.day+ "/" +res.data[i].moveDate.month+ "/" +res.data[i].moveDate.year )])});
-                }
+                // }
+                this.setState({ data: res.data})
                 console.log("data[] is :"+ JSON.stringify(this.state.data));
             })
             .catch(err => {
