@@ -16,9 +16,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 //icons
-import coin from "../assets/coin-pink.png";
-import sandclock from "../assets/sandclock-pink.png";
-import track from "../assets/track-pink.png";
+import coin from "../assets/coin.png";
+import sandclock from "../assets/sandclock.png";
+import track from "../assets/track.png";
 
 const moon = new Moon();
 
@@ -373,7 +373,6 @@ render() {
                         <div className="header-info">
                             <p>XXXXXX@gmail.com</p>
                             <p>1-111-1111</p>
-                            <p><a href="/">Log in</a></p>
                         </div>
                     </div>
                 </header>
@@ -409,7 +408,7 @@ render() {
                                     </div>
                                 </div>
 
-                                <div className="form__middle">
+                                <div className="form__bottom">
 
                                     {/*select moving from*/}
                                     <div className="input__city">
@@ -440,20 +439,12 @@ render() {
                                         <select
                                             id="errCatch"
                                             onChange={this.getProvTo}
-                                            className="input__city-item select">
+                                            className="input__city-item">
                                             <option value=''>Province</option>
                                             {
                                                 this.state.prov.map((prov, index) =>
                                                     <option key={index} name="areaList">{prov.name}</option>)}
                                         </select>
-<<<<<<< HEAD
-                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item select" onChange={this.filterToList} />
-                                            <div>
-                                                {this.state.itemsTo.map((area, index) => {
-                                                    return ( <li key={index} >{area}</li> )
-                                                })}
-                                            </div>
-=======
                                         <Autosuggest
                                             suggestions={suggestions}
                                             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -462,12 +453,8 @@ render() {
                                             renderSuggestion={renderSuggestion}
                                             inputProps={inputProps}
                                         />
->>>>>>> 628fc2cb25f775ec1dbae5b9e6aacf9ccfb2575c
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveToID}</div>
                                     </div>
-                                </div>
-
-                                <div className="form__bottom">
 
                                     {/*input date*/}
                                     <div className="input__container">
@@ -483,7 +470,6 @@ render() {
                                                 name="bedRoom">{bedRoom}</option>)}</select>
                                     <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.bedRoomNumber}</div>
                                 </div>
-
                                 <button className="sendButton" onClick={this.ayaka} type="submit"
                                         name="submitButton">Get a Quote
                                 </button>
@@ -522,6 +508,7 @@ render() {
                 <footer>
                     <div className="footer__flex">
                         <div className="footer__flex--left">
+                            <p><a href="/">Log in</a></p>
                             <p><a href="/">Privacy Policy</a></p>
                         </div>
                         <div className="footer__flex--right">
