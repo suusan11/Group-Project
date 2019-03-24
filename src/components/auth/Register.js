@@ -202,6 +202,7 @@ class Register extends Component {
                             {this.state.showArea.map((area, index) =>
                                 <div key={index}>
                                     <input type="checkbox" name="coveredArea" value={area} onChange={this.inputChange}/>{area}
+                                    <button　className="showCity">▼</button>
                                 </div>
                             )}
                         </div>
