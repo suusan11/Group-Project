@@ -27,15 +27,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
-<<<<<<< HEAD
     "browser-sync": "^2.26.3",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.0.2"
-=======
     "prop-types": "^15.7.2",
     "react-autosuggest": "^9.4.3"
->>>>>>> 628fc2cb25f775ec1dbae5b9e6aacf9ccfb2575c
   }
 }
