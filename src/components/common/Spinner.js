@@ -27,8 +27,6 @@ function CircularIndeterminate(props) {
         height: '60px'
     }
 
-    console.log(isLoading);
-
     return (
         <div style={loadingPosition}>
             <CircularProgress className={classes.progress} style={iconSize} />
