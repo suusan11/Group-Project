@@ -18,16 +18,17 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import Button from '@material-ui/core/Button';
 import Moon from '../.././connection/Moon';
+import { Link } from "react-router-dom";
 
 const moon = new Moon();
 
 // let counter = 0;
-
-// function createData(_id, phoneNumber, email, moveFromID, moveToID, date) {
+// function createData(balance, authID, phoneNumber, email, coverAreas, coverCities) {
 //     counter += 1;
-    
-//     return { id: counter, _id, phoneNumber, email, moveFromID, moveToID, date };
+
+//     return { id: counter, balance, authID, phoneNumber, email, coverAreas, coverCities};
 // }
 
 function desc(a, b, orderBy) {
@@ -55,14 +56,17 @@ function getSorting(order, orderBy) {
 }//ソート関数
 
 const rows = [
-    { id: 'leadId', numeric: false, disablePadding: true, label: 'ID' },
-    { id: 'phone', numeric: false, disablePadding: false, label: 'PHONE' },
+    
+    { id: 'authID', numeric: false, disablePadding: true, label: 'ID' },
+    // { id: 'companyName', numeric: false, disablePadding: false, label: 'COMPANY' },
+    { id: 'phoneNumber', numeric: false, disablePadding: false, label: 'PHONE' },
     { id: 'email', numeric: false, disablePadding: false, label: 'E-MAIL' },
-    { id: 'origin', numeric: false, disablePadding: false, label: 'ORIGIN' },
-    { id: 'destination', numeric: false, disablePadding: false, label: 'DESTINATION' },
-    { id: 'date', numeric: false, disablePadding: false, label: 'DATE' }
-];
-// テーブルラベルの型
+    { id: 'coverAreas', numeric: false, disablePadding: false, label: 'COVERAREA' },
+    { id: 'coverCities', numeric: false, disablePadding: false, label: 'COVERCITIES' }, 
+    { id: 'balance', numeric: false, disablePadding: false, label: 'BALANCE' },
+    { id: 'invoice', numeric: false, disablePadding: false, label: 'INVOICE' }, 
+    { id: 'moreInfo', numeric: false, disablePadding: false, label: 'MOREINFO' }, 
+];//テーブルラベルの型
 
 class EnhancedTableHead extends React.Component {
     createSortHandler = property => event => {
@@ -163,7 +167,7 @@ let EnhancedTableToolbar = props => {
                     </Typography>
                 ) : (
                     <Typography variant="h6" id="tableTitle">
-                        ADMIN PAGE
+                        COMPANY's INFO (ALL)
                     </Typography>
                 )}
             </div>
@@ -218,18 +222,30 @@ class EnhancedTable extends React.Component {
     };
 
     componentWillMount() {
-
+       
         moon
-            .get('api/client/all')
+            .get('api/company/all')
             .then(res => {
                 for (let i = 0; i < res.data.length; i++) {
 
+                    // console.log("aaaaaa"+res.data[1].paymentInfo.currentBalance.toString());
                     this.setState({data:res.data})
-                    console.log('😱' +JSON.stringify(this.data))
-                    // this.setState({ data: this.state.data.concat([createData([res.data[i]._id],[res.data[i].phoneNumber],[res.data[i].email],[res.data[i].moveFromID],[res.data[i].moveToID],[res.data[i].moveDate.day]+ "/" +[res.data[i].moveDate.month]+ "/" +[res.data[i].moveDate.year] )])});
-                    // ！！createData関数を使用しないため、上記のsetstateは使用しない
+                    console.log('😍😍😍' + JSON.stringify(this.state.data))
+
+                    // this.setState({ data: [createData(this.state.data.concat([res.data[i].id],[res.data[i].fullName]))]});
+
+                    // this.setState({ data: this.state.data.concat([createData(
+                    //     [res.data[i].paymentInfo.currentBalance],
+                    //     [res.data[i].authID],
+                    //     [res.data[i].phoneNumber],
+                    //     [res.data[i].email],
+                    //     [res.data[i].coverAreas.map(cityname=>(cityname.areaID.name))],
+                    //     [res.data[i].coverCities.map(cityname=>(cityname.cityID.city))],
+                    // )])});
+
+                    // ！！このページではcreateDataの関数を使用しなくなったので上記不要、代わりに下のsetstateを使用
                 }
-               console.log("data[] is :"+ JSON.stringify(this.state.data));
+                console.log("data[] is :"+ JSON.stringify(this.state.data));
             })
             .catch(err => {
                 console.log(JSON.stringify(err));
@@ -287,13 +303,12 @@ class EnhancedTable extends React.Component {
 
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
+
     render() {
         const { classes } = this.props;
         const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
-        console.log('😄'+JSON.stringify(this.data))
-       
         return (
             <Paper className={classes.root}>
                 <EnhancedTableToolbar numSelected={selected.length} />
@@ -311,24 +326,23 @@ class EnhancedTable extends React.Component {
                             {stableSort(data, getSorting(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((n,i)=> {
-
+                                   
                                     if(i==0){console.log("😓 n => "+JSON.stringify(n));}
                                     if(n){console.log("😓 i => "+i);}
                                     if(n.length){console.log("😓 n.length => "+n.length);}
-                                    if(n._id){console.log("😓 n._id => "+n._id);}
+                                    if(n.balance){console.log("😓 n.balance => "+n.paymentInfo);}
+                                    if(n.authID){console.log("😓 n.authID => "+n.authID);}
                                     if(n.phoneNumber){console.log("😓 n.phoneNumber => "+n.phoneNumber);}
                                     if(n.email){console.log("😓 n.email => "+n.email);}
-                                    if(n.moveFromID){
-                                      console.log("😓 n.moveFromID => "+JSON.stringify(n.moveFromID))
-                                    }else{
-                                      console.log("😓 n.moveFromID => "+"No data")
+                                    if(n.coverAreas){
+                                        console.log("😓 n.areaName => "+JSON.stringify(n.coverAreas.map(coverArea => coverArea.areaID.name)))
                                     }
-                                    if(n.moveToID){
-                                        console.log("😓 n.moveFromID => "+JSON.stringify(n.moveToID))
-                                    }else{
-                                      console.log("😓 n.moveToID => "+"No data")
+                                    if(n.coverCities){
+                                        console.log("😓 n.coverCities => "+JSON.stringify(n.coverCities.map(coverCity => coverCity.cityID.city)))
                                     }
+                                  
                                     const isSelected = this.isSelected(n.id);
+
                                     return (
                                         //一人分の型を作る（データは入っていない）
                                         <TableRow
@@ -343,15 +357,31 @@ class EnhancedTable extends React.Component {
                                             <TableCell padding="checkbox">
                                                 <Checkbox checked={isSelected} />
                                             </TableCell>
-                                            <TableCell component="th" scope="row" padding="none">{n._id}</TableCell>
+                                            {/* <TableCell component="th" scope="row" padding="none">{n.authId}</TableCell> */}
+                                            <TableCell align="left">{n.authID}</TableCell>
+                                            {/* <TableCell align="left">{n.companyName}</TableCell> */}
                                             <TableCell align="left">{n.phoneNumber}</TableCell>
                                             <TableCell align="left">{n.email}</TableCell>
-                                             <TableCell align="left">{n.moveFromID.city}</TableCell>
-                                            <TableCell align="left">{n.moveToID.city}</TableCell>
-                                            <TableCell align="left">{n.moveDate.month}-{n.moveDate.day}-{n.moveDate.year}</TableCell> 
+                                            <TableCell align="left">{n.coverAreas.map(coverArea => coverArea.areaID.name)}</TableCell>
+                                            <TableCell align="left">{n.coverCities.map(coverCity => coverCity.cityID.city)}</TableCell>
+                                            <TableCell align="left">{n.paymentInfo.currentBalance}</TableCell>
+                                            <TableCell align="left"> 
+                                                <Link to="/invoice">
+                                                    <button type="button">
+                                                        INVOICE
+                                                    </button>
+                                                </Link>
+                                            </TableCell>
+                                            <TableCell align="left"> 
+                                                <Link to="/moreinfo">
+                                                    <button type="button">
+                                                        MOREINFO
+                                                    </button>
+                                                </Link>
+                                            </TableCell>
                                         </TableRow>
                                     );
-                            })}
+                                })}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: 49 * emptyRows }}>
                                     <TableCell colSpan={6} />
