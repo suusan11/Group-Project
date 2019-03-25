@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Lead from './components/lead/Lead';
-import Admin from './components/admin/Admin';
 
 
 class App extends Component {
@@ -9,7 +8,6 @@ class App extends Component {
         return (
             <div className="App">
                 <Lead />
-                <Admin />
             </div>
         );
     }
