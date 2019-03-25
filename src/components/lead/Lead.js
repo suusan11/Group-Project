@@ -445,16 +445,7 @@ render() {
                                             {
                                                 this.state.prov.map((prov, index) =>
                                                     <option key={index} name="areaList">{prov.name}</option>)}
-                                        </select>
-<<<<<<< HEAD
-                                        <input placeholder="City" id="errCatch" ref="test" className="input__city-item select" onChange={this.filterToList} />
-                                            <div>
-                                                {this.state.itemsTo.map((area, index) => {
-                                                    return ( <li key={index} >{area}</li> )
-                                                })}
-                                            </div>
-=======
-                                        <Autosuggest
+                                        </select><Autosuggest
                                             suggestions={suggestions}
                                             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                                             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
@@ -462,7 +453,6 @@ render() {
                                             renderSuggestion={renderSuggestion}
                                             inputProps={inputProps}
                                         />
->>>>>>> 628fc2cb25f775ec1dbae5b9e6aacf9ccfb2575c
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveToID}</div>
                                     </div>
                                 </div>
