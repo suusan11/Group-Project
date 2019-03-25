@@ -357,8 +357,7 @@ class EnhancedTable extends React.Component {
                                             <TableCell padding="checkbox">
                                                 <Checkbox checked={isSelected} />
                                             </TableCell>
-                                            {/* <TableCell component="th" scope="row" padding="none">{n.authId}</TableCell> */}
-                                            <TableCell align="left">{n.authID}</TableCell>
+                                            <TableCell component="th" scope="row" padding="none">{n.authID}</TableCell>
                                             {/* <TableCell align="left">{n.companyName}</TableCell> */}
                                             <TableCell align="left">{n.phoneNumber}</TableCell>
                                             <TableCell align="left">{n.email}</TableCell>
