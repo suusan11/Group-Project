@@ -28,8 +28,8 @@ const getSuggestions = (value, areaList) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    return inputLength === 0 ? [] : areaList.filter(lang => // 2: ここで "areaList" にフィルターをかける
-        lang.toLowerCase().slice(0, inputLength) === inputValue
+    return inputLength === 0 ? [] : areaList.filter(area => // 2: ここで "areaList" にフィルターをかける
+        area.toLowerCase().slice(0, inputLength) === inputValue
     );
 };
 
@@ -44,6 +44,72 @@ const renderSuggestion = suggestion => (
         {suggestion}  {/*// 4: ここでドロップダウン出力*/}
     </div>
 );
+
+
+
+class MyAutosuggest extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: '',
+            suggestions: []
+        };
+    }
+
+
+
+    onChangeValue = (_, {newValue}) => {
+        const { id, onChange } = this.props;
+
+        this.setState({
+            value: newValue
+        });
+
+        console.log("💁🏿‍♂"+JSON.stringify(this.props));
+        onChange(id, newValue);
+    };
+
+    onSuggestionsFetchRequested = ({ value }) => {
+        const {areaList} = this.props;
+        console.log(areaList);
+        this.setState({
+            suggestions: getSuggestions(value, areaList)
+        });
+    };
+
+    onSuggestionsClearRequested = () => {
+        this.setState({
+            suggestions: []
+        });
+    };
+
+    render() {
+        const { id, placeholder } = this.props;
+        const { value, suggestions } = this.state;
+        const inputProps = {
+            placeholder,
+            value,
+            onChange: this.onChangeValue
+        };
+
+        return (
+            <Autosuggest
+                id={id}
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={renderSuggestion}
+                inputProps={inputProps}
+            />
+        );
+    }
+}
+
+
+
+
 
 class Lead extends Component {
 
@@ -312,7 +378,6 @@ class Lead extends Component {
 
     };
 
-
     // Check if the object is empty
     ////////////////////////////////////////
     isEmpty(obj) {
@@ -320,47 +385,12 @@ class Lead extends Component {
     }
     ////////////////////////////////////////
 
-    /////////////////////////
-    onChangeValue = (event, { newValue }) => {
-        this.setState({
-            value: newValue
-        });
-    };
-    /////////////////////////
 
-    // Autosuggest will call this function every time you need to update suggestions.
-    // You already implemented this logic above, so just use it.
-    /////////////////////////
-    onSuggestionsFetchRequested = ({ value }) => {
-        this.setState({
-            suggestions: getSuggestions(value, this.state.areaList) // 1: ここで "areaList" 渡す
-        });
-    };
-    /////////////////////////
-
-    // Autosuggest will call this function every time you need to clear suggestions.
-    /////////////////////////
-    onSuggestionsClearRequested = () => {
-        this.setState({
-            suggestions: []
-        });
-    };
-    /////////////////////////
-
-
-
+    onChangeValue(id, newValue) {
+        console.log(`${id} changed to ${newValue}`);
+    }
 
 render() {
-
-    const { value, suggestions } = this.state;
-
-    // Autosuggest will pass through all these props to the input.
-    const inputProps = {
-        placeholder: 'City',
-        value,
-        onChange: this.onChangeValue
-
-    };
 
         return (
             <div className="App">
@@ -414,45 +444,48 @@ render() {
                                     {/*select moving from*/}
                                     <div className="input__city">
                                         <div className="city__label">Moving from</div>
-                                        <select
-                                            id="errCatch"
-                                            onChange={this.getProvFrom}
-                                            className="input__city-item">
-                                            <option value=''>Province</option>
-                                            {
-                                                this.state.prov.map((prov, index) =>
-                                                    <option key={index} name="areaList">{prov.name}</option>)}
-                                        </select>
-                                        <Autosuggest
-                                            suggestions={suggestions}
-                                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                                            getSuggestionValue={getSuggestionValue}
-                                            renderSuggestion={renderSuggestion}
-                                            inputProps={inputProps}
-                                        />
+                                        <div className="input__city--container">
+                                            <select
+                                                id="errCatch"
+                                                onChange={this.getProvFrom}
+                                                className="input__city-item">
+                                                <option value=''>Province</option>
+                                                {
+                                                    this.state.prov.map((prov, index) =>
+                                                        <option key={index} name="areaList">{prov.name}</option>)}
+                                            </select>
+                                            <MyAutosuggest
+                                                className="input__city-item"
+                                                id="cityFrom"
+                                                placeholder="Move from"
+                                                onChange={this.onChangeValue}
+                                                areaList={this.state.areaList}
+                                            />
+                                        </div>
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveFromID}</div>
                                     </div>
 
                                     {/*select moving to*/}
                                     <div className="input__city">
                                         <div className="city__label">Moving to</div>
-                                        <select
-                                            id="errCatch"
-                                            onChange={this.getProvTo}
-                                            className="input__city-item select">
-                                            <option value=''>Province</option>
-                                            {
-                                                this.state.prov.map((prov, index) =>
-                                                    <option key={index} name="areaList">{prov.name}</option>)}
-                                        </select><Autosuggest
-                                            suggestions={suggestions}
-                                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                                            getSuggestionValue={getSuggestionValue}
-                                            renderSuggestion={renderSuggestion}
-                                            inputProps={inputProps}
-                                        />
+                                        <div className="input__city--container">
+                                            <select
+                                                id="errCatch"
+                                                onChange={this.getProvTo}
+                                                className="input__city-item select">
+                                                <option value=''>Province</option>
+                                                {
+                                                    this.state.prov.map((prov, index) =>
+                                                        <option key={index} name="areaList">{prov.name}</option>)}
+                                            </select>
+                                            <MyAutosuggest
+                                                className="input__city-item"
+                                                id="cityTo"
+                                                placeholder="Move to"
+                                                onChange={this.onChangeValue}
+                                                areaList={this.state.areaList}
+                                            />
+                                        </div>
                                         <div className="error">{this.isEmpty(this.state.errors) ? '' : this.state.errors.moveToID}</div>
                                     </div>
                                 </div>
